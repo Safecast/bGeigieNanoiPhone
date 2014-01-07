@@ -65,8 +65,7 @@
     }else{
         _startButton.hidden = FALSE;
     }
-     */
-    
+      */
 }
 
 -(void)viewWillAppear:(BOOL)animated
