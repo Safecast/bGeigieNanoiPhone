@@ -80,7 +80,7 @@
     
     NSLog(@"identifier of peripheral:%@, data:%@",peripheral.identifier, peripheral.name);
     
-    if ([peripheral.name hasPrefix:@"BLEBee"]) {
+    if ([peripheral.name hasPrefix:@"BLEbee"]) {
         if (![self theDeviceExitsInArray:peripheral.name]) {
             [_foundPeripherals addObject:peripheral];
             [self.tableView reloadData];
@@ -122,7 +122,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"peripheralCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
