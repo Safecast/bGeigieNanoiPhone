@@ -100,6 +100,7 @@
 }
 
 
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -132,6 +133,12 @@
     }
     
     return cell;
+}
+
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    _peripheralToConnect = [_foundPeripherals objectAtIndex:indexPath.row];
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 /*

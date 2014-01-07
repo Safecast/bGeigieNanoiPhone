@@ -8,6 +8,7 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 
 #import "ViewController.h"
+#import "FindingPeripheralTableViewController.h"
 
 @interface ViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate>
 
@@ -66,6 +67,17 @@
     }
      */
     
+}
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (_connectingPeripheral) {
+        _connectingPeripheral.delegate = self;
+        [self.centralManager connectPeripheral:_connectingPeripheral options:nil];
+        [self addStringToTextView:@"request to connect peripheral"];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -144,38 +156,7 @@
  */
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
-    if (central.state != CBCentralManagerStatePoweredOn) {
-        
-        //if the centralmanage power off, set the state
-        [self stop];
-        [self addStringToTextView: @"BLE is not power on"];
-        return;
-    }
     
-    //if central manager power on, change the state
-    [_centralManager scanForPeripheralsWithServices:nil
-                                            options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @NO }];
-    
-}
-/** This callback comes whenever a peripheral that is advertising the TRANSFER_SERVICE_UUID is discovered.
- *  We check the RSSI, to make sure it's close enough that we're interested in it, and if it is,
- *  we start the connection process
- */
-- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
-{
-    
-    NSLog(@"identifier of peripheral:%@, data:%@",peripheral.identifier, peripheral.name);
- /*
-    if (!_connectingPeripheral) {
-        [_centralManager stopScan];
-        
-        _connectingPeripheral = peripheral;
-        
-        [self.centralManager connectPeripheral:peripheral options:nil];
-        [self addStringToTextView:@"request to connect peripheral"];
-    }
-  */
-
 }
 
 
@@ -323,6 +304,15 @@
 -(void)peripheralDidInvalidateServices:(CBPeripheral *)peripheral
 {
     NSLog(@"Central node peripheralDidInvalidateServices");
+}
+
+
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"findPeripherals"]) {
+        FindingPeripheralTableViewController *destiController = (FindingPeripheralTableViewController *)segue.destinationViewController;
+        destiController.peripheralToConnect = _connectingPeripheral;
+    }
 }
 
 

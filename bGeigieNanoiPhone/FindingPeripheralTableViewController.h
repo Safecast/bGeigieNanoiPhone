@@ -9,8 +9,8 @@
 #import <UIKit/UIKit.h>
 #import <CoreBluetooth/CoreBluetooth.h>
 
-@interface FindingPeripheralTableViewController : UITableViewController <CBCentralManagerDelegate, CBPeripheralDelegate>
+@interface FindingPeripheralTableViewController : UITableViewController
 
-@property(nonatomic, retain)CBPeripheral *peripheralToConnect;
+@property(nonatomic, strong)CBPeripheral *peripheralToConnect;
 
 @end
