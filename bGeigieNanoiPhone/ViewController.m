@@ -9,21 +9,19 @@
 
 #import "ViewController.h"
 
-//#define TRANSFER_SERVICE_UUID       @"79008485-8612-909D-5EBB-8344D8E81258"
-#define TRANSFER_SERVICE_UUID       @"EF080D8C-C3BE-41FF-BD3F-05A5F4795D7F"
-#define RX_CHARACTERISTIC_UUID      @"A1E8F5B1-696B-4E4C-87C6-69DFE0B0093B"
-#define TX_CHARACTERISTIC_UUID      @"1494440E-9A58-4CC0-81E4-DDEA7F74F623"
-
 @interface ViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate>
 
 @property (strong, nonatomic) CBCentralManager      *centralManager;
 @property (strong, nonatomic) CBPeripheral          *connectingPeripheral;
 @property (nonatomic, assign) BOOL                  isStart;
 @property (nonatomic, retain) NSString              *dataRecord;
+@property (nonatomic, retain) NSString              *serviceUUID;
+@property (nonatomic, retain) NSString              *rxUUID;
 
 @property (weak, nonatomic) IBOutlet UISwitch *txSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UITextView *messageOutputTextView;
+
 - (IBAction)pushStartButton:(id)sender;
 
 @end
@@ -35,6 +33,36 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     _isStart = FALSE;
+    
+    _serviceUUID = [[NSUserDefaults standardUserDefaults] valueForKey:@"Service_UUID"];
+    if (!_serviceUUID) {
+       
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                        message:NSLocalizedString(@"Please provide service UUID in the Settings", nil)
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    _rxUUID =[[NSUserDefaults standardUserDefaults] valueForKey:@"RX_UUID"];
+    
+    if (!_rxUUID) {
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
+                                                        message:NSLocalizedString(@"Please provide RX UUID in the Settings", nil)
+                                                       delegate:nil
+                                              cancelButtonTitle:@"OK"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    if (!_rxUUID || !_serviceUUID) {
+        _startButton.hidden = TRUE;
+    }else{
+        _startButton.hidden = FALSE;
+    }
+
     
 }
 
@@ -102,7 +130,7 @@
     }
     return selectedUUID;
      */
-    return RX_CHARACTERISTIC_UUID;
+    return _rxUUID;
 }
 
 
@@ -123,7 +151,7 @@
     }
     
     //if central manager power on, change the state
-    [_centralManager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:TRANSFER_SERVICE_UUID]]
+    [_centralManager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:_serviceUUID]]
                                             options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @NO }];
     
 }
@@ -173,7 +201,7 @@
     // Search only for services that match our UUID
     [self addStringToTextView:@"discover service"];
     
-    [peripheral discoverServices:@[[CBUUID UUIDWithString:TRANSFER_SERVICE_UUID]]];
+    [peripheral discoverServices:@[[CBUUID UUIDWithString:_serviceUUID]]];
 }
 
 -(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
