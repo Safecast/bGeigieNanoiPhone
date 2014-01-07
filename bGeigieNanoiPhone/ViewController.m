@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSString              *serviceUUID;
 @property (nonatomic, retain) NSString              *rxUUID;
 
+
 @property (weak, nonatomic) IBOutlet UISwitch *txSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UITextView *messageOutputTextView;
@@ -34,6 +35,7 @@
 	// Do any additional setup after loading the view, typically from a nib.
     _isStart = FALSE;
     
+    /*
     _serviceUUID = [[NSUserDefaults standardUserDefaults] valueForKey:@"Service_UUID"];
     if (!_serviceUUID) {
        
@@ -62,7 +64,7 @@
     }else{
         _startButton.hidden = FALSE;
     }
-
+     */
     
 }
 
@@ -151,7 +153,7 @@
     }
     
     //if central manager power on, change the state
-    [_centralManager scanForPeripheralsWithServices:@[[CBUUID UUIDWithString:_serviceUUID]]
+    [_centralManager scanForPeripheralsWithServices:nil
                                             options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @NO }];
     
 }
@@ -161,7 +163,9 @@
  */
 - (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
 {
- 
+    
+    NSLog(@"identifier of peripheral:%@, data:%@",peripheral.identifier, peripheral.name);
+ /*
     if (!_connectingPeripheral) {
         [_centralManager stopScan];
         
@@ -170,6 +174,7 @@
         [self.centralManager connectPeripheral:peripheral options:nil];
         [self addStringToTextView:@"request to connect peripheral"];
     }
+  */
 
 }
 

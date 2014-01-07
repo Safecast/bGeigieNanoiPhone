@@ -23,6 +23,7 @@
 		BE3816EC187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816EB187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m */; };
 		BE3816F6187BC90A0005C7DE /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3816F5187BC90A0005C7DE /* CoreBluetooth.framework */; };
 		BE3816FA187BE7080005C7DE /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BE3816F9187BE7080005C7DE /* Settings.bundle */; };
+		BE3816FD187BF35C0005C7DE /* FindingPeripheralTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816FC187BF35C0005C7DE /* FindingPeripheralTableViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,8 @@
 		BE3816EB187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = bGeigieNanoiPhoneTests.m; sourceTree = "<group>"; };
 		BE3816F5187BC90A0005C7DE /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
 		BE3816F9187BE7080005C7DE /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		BE3816FB187BF35C0005C7DE /* FindingPeripheralTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindingPeripheralTableViewController.h; sourceTree = "<group>"; };
+		BE3816FC187BF35C0005C7DE /* FindingPeripheralTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindingPeripheralTableViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +129,8 @@
 				BE3816D8187BC3C60005C7DE /* Images.xcassets */,
 				BE3816C7187BC3C60005C7DE /* Supporting Files */,
 				BE3816F9187BE7080005C7DE /* Settings.bundle */,
+				BE3816FB187BF35C0005C7DE /* FindingPeripheralTableViewController.h */,
+				BE3816FC187BF35C0005C7DE /* FindingPeripheralTableViewController.m */,
 			);
 			path = bGeigieNanoiPhone;
 			sourceTree = "<group>";
@@ -260,6 +265,7 @@
 				BE3816D7187BC3C60005C7DE /* ViewController.m in Sources */,
 				BE3816D1187BC3C60005C7DE /* AppDelegate.m in Sources */,
 				BE3816CD187BC3C60005C7DE /* main.m in Sources */,
+				BE3816FD187BF35C0005C7DE /* FindingPeripheralTableViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -468,6 +474,7 @@
 				BE3816F1187BC3C60005C7DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BE3816F2187BC3C60005C7DE /* Build configuration list for PBXNativeTarget "bGeigieNanoiPhoneTests" */ = {
 			isa = XCConfigurationList;
@@ -476,6 +483,7 @@
 				BE3816F4187BC3C60005C7DE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
