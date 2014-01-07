@@ -21,6 +21,8 @@
 		BE3816E2187BC3C60005C7DE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3816C4187BC3C60005C7DE /* UIKit.framework */; };
 		BE3816EA187BC3C60005C7DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE3816E8187BC3C60005C7DE /* InfoPlist.strings */; };
 		BE3816EC187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816EB187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m */; };
+		BE3816F6187BC90A0005C7DE /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3816F5187BC90A0005C7DE /* CoreBluetooth.framework */; };
+		BE3816FA187BE7080005C7DE /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BE3816F9187BE7080005C7DE /* Settings.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,6 +55,8 @@
 		BE3816E7187BC3C60005C7DE /* bGeigieNanoiPhoneTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "bGeigieNanoiPhoneTests-Info.plist"; sourceTree = "<group>"; };
 		BE3816E9187BC3C60005C7DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BE3816EB187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = bGeigieNanoiPhoneTests.m; sourceTree = "<group>"; };
+		BE3816F5187BC90A0005C7DE /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
+		BE3816F9187BE7080005C7DE /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +64,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE3816F6187BC90A0005C7DE /* CoreBluetooth.framework in Frameworks */,
 				BE3816C3187BC3C60005C7DE /* CoreGraphics.framework in Frameworks */,
 				BE3816C5187BC3C60005C7DE /* UIKit.framework in Frameworks */,
 				BE3816C1187BC3C60005C7DE /* Foundation.framework in Frameworks */,
@@ -101,6 +106,7 @@
 		BE3816BF187BC3C60005C7DE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BE3816F5187BC90A0005C7DE /* CoreBluetooth.framework */,
 				BE3816C0187BC3C60005C7DE /* Foundation.framework */,
 				BE3816C2187BC3C60005C7DE /* CoreGraphics.framework */,
 				BE3816C4187BC3C60005C7DE /* UIKit.framework */,
@@ -119,6 +125,7 @@
 				BE3816D6187BC3C60005C7DE /* ViewController.m */,
 				BE3816D8187BC3C60005C7DE /* Images.xcassets */,
 				BE3816C7187BC3C60005C7DE /* Supporting Files */,
+				BE3816F9187BE7080005C7DE /* Settings.bundle */,
 			);
 			path = bGeigieNanoiPhone;
 			sourceTree = "<group>";
@@ -228,6 +235,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE3816FA187BE7080005C7DE /* Settings.bundle in Resources */,
 				BE3816D9187BC3C60005C7DE /* Images.xcassets in Resources */,
 				BE3816CB187BC3C60005C7DE /* InfoPlist.strings in Resources */,
 				BE3816D4187BC3C60005C7DE /* Main.storyboard in Resources */,
