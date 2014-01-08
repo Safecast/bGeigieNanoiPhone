@@ -7,10 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <CoreBluetooth/CoreBluetooth.h>
+
+@protocol FindingPeripheralDelegate <NSObject>
+
+-(void)selectPeripheralByIndex: (NSInteger)index;
+
+@end
 
 @interface FindingPeripheralTableViewController : UITableViewController
 
-@property(nonatomic, strong)CBPeripheral *peripheralToConnect;
+@property (nonatomic, strong)   NSMutableArray *peripheralNameArray;
+@property (nonatomic)           id<FindingPeripheralDelegate> delegate;
+
+-(void)addPeripheralName: (NSString *)foundPeripheralName;
 
 @end

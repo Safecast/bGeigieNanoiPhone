@@ -10,7 +10,7 @@
 #import "ViewController.h"
 #import "FindingPeripheralTableViewController.h"
 
-@interface ViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate>
+@interface ViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate, FindingPeripheralDelegate>
 
 @property (strong, nonatomic) CBCentralManager      *centralManager;
 @property (strong, nonatomic) CBPeripheral          *connectingPeripheral;
@@ -24,6 +24,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UITextView *messageOutputTextView;
 
+@property (nonatomic, strong) NSMutableArray                        *foundPeripherals;
+@property (nonatomic, strong) FindingPeripheralTableViewController  *findPeripheralController;
+
+
 - (IBAction)pushStartButton:(id)sender;
 
 @end
@@ -35,6 +39,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     _isStart = FALSE;
+    
+    _foundPeripherals = [[NSMutableArray alloc] init];
+
     
     /*
     _serviceUUID = [[NSUserDefaults standardUserDefaults] valueForKey:@"Service_UUID"];
@@ -72,11 +79,6 @@
 {
     [super viewWillAppear:animated];
     
-    if (_connectingPeripheral) {
-        _connectingPeripheral.delegate = self;
-        [self.centralManager connectPeripheral:_connectingPeripheral options:nil];
-        [self addStringToTextView:@"request to connect peripheral"];
-    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -90,6 +92,12 @@
         [self stop];
     }else{
         [self start];
+        UIStoryboard *managementStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+
+        _findPeripheralController = [managementStoryboard instantiateViewControllerWithIdentifier:@"FindingPeripheralTableViewController"];;
+        [_findPeripheralController setDelegate:self];
+        [self.navigationController pushViewController:_findPeripheralController animated:YES];
+        
     }
 }
 
@@ -99,6 +107,8 @@
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
     [_startButton setTitle:@"Stop" forState:UIControlStateNormal];
     _isStart = TRUE;
+    
+    _foundPeripherals = [[NSMutableArray alloc] init];
 
 }
 -(void)stop
@@ -107,9 +117,22 @@
         [_centralManager cancelPeripheralConnection:_connectingPeripheral];
         _connectingPeripheral = nil;
     }
+    _foundPeripherals = nil;
+    
     _isStart = FALSE;
     [_startButton setTitle:@"Start" forState:UIControlStateNormal];
+    
 
+}
+
+-(BOOL)theDeviceExitsInArray: (NSString *)peripheralName
+{
+    for (CBPeripheral *peripheral in _foundPeripherals) {
+        if ([peripheralName isEqualToString:peripheral.name]) {
+            return TRUE;
+        }
+    }
+    return FALSE;
 }
 
 #pragma mark -add string to text view
@@ -155,6 +178,46 @@
  */
 - (void)centralManagerDidUpdateState:(CBCentralManager *)central
 {
+    if (central.state != CBCentralManagerStatePoweredOn) {
+        
+        //if the centralmanage power off, set the state
+        return;
+    }
+    
+    //if central manager power on, change the state
+    [_centralManager scanForPeripheralsWithServices:nil
+                                            options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @NO }];
+    
+
+}
+
+/** This callback comes whenever a peripheral that is advertising the TRANSFER_SERVICE_UUID is discovered.
+ *  We check the RSSI, to make sure it's close enough that we're interested in it, and if it is,
+ *  we start the connection process
+ */
+- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
+{
+    
+    NSLog(@"identifier of peripheral:%@, data:%@",peripheral.identifier, peripheral.name);
+    
+//    if ([peripheral.name hasPrefix:@"BLEbee"]) {
+        if (peripheral.name && ![self theDeviceExitsInArray:peripheral.name]) {
+            [_foundPeripherals addObject:peripheral];
+            if (_findPeripheralController) {
+                [_findPeripheralController addPeripheralName:peripheral.name];
+            }
+        }
+//    }
+    /*
+     if (!_connectingPeripheral) {
+     [_centralManager stopScan];
+     
+     _connectingPeripheral = peripheral;
+     
+     [self.centralManager connectPeripheral:peripheral options:nil];
+     [self addStringToTextView:@"request to connect peripheral"];
+     }
+     */
     
 }
 
@@ -186,7 +249,7 @@
     // Search only for services that match our UUID
     [self addStringToTextView:@"discover service"];
     
-    [peripheral discoverServices:@[[CBUUID UUIDWithString:_serviceUUID]]];
+    [peripheral discoverServices:nil];
 }
 
 -(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
@@ -209,8 +272,8 @@
     // Loop through the newly filled peripheral.services array, just in case there's more than one.
     for (CBService *service in peripheral.services) {
         
-
-        [peripheral discoverCharacteristics:@[[CBUUID UUIDWithString:[self getSwitchValue]]] forService:service];
+        NSLog(@"service:%@",service.description);
+        [peripheral discoverCharacteristics:nil forService:service];
         
     }
     
@@ -233,19 +296,29 @@
     // Again, we loop through the array, just in case.
     for (CBCharacteristic *characteristic in service.characteristics) {
         
-
+        BOOL isRX = FALSE;
+        
+        if ((characteristic.properties & CBCharacteristicPropertyRead) == CBCharacteristicPropertyRead &&
+            (characteristic.properties & CBCharacteristicPropertyNotify) == CBCharacteristicPropertyNotify) {
+            isRX = TRUE;
+            [peripheral setNotifyValue:YES forCharacteristic:characteristic];
+            NSLog(@"found RX char");
+            
+        }
+        
+        /*
         if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:[self getSwitchValue]]]) {
             
             [peripheral setNotifyValue:YES forCharacteristic:characteristic];
 
             
             }
+         */
             
     }
     
     
 }
-
 
 
 /** The peripheral letting us know whether our subscribe/unsubscribe happened or not
@@ -256,10 +329,6 @@
         NSLog(@"Central node Error changing notification state: %@", error.localizedDescription);
     }
     
-    // Exit if it's not the transfer characteristic
-    if (![characteristic.UUID isEqual:[CBUUID UUIDWithString:[self getSwitchValue]]]) {
-        return;
-    }
     
     // Notification has started
     if (characteristic.isNotifying) {
@@ -309,8 +378,20 @@
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"findPeripherals"]) {
-        FindingPeripheralTableViewController *destiController = (FindingPeripheralTableViewController *)segue.destinationViewController;
-        destiController.peripheralToConnect = _connectingPeripheral;
+        _findPeripheralController = (FindingPeripheralTableViewController *)segue.destinationViewController;
+        [_findPeripheralController setDelegate:self];
+    }
+}
+
+#pragma mark delegate methods of finding peripheral view controller
+-(void)selectPeripheralByIndex:(NSInteger)index
+{
+    _connectingPeripheral = [_foundPeripherals objectAtIndex:index];
+    
+    if (_connectingPeripheral) {
+        _connectingPeripheral.delegate = self;
+        [self.centralManager connectPeripheral:_connectingPeripheral options:nil];
+        [self addStringToTextView:@"request to connect peripheral"];
     }
 }
 

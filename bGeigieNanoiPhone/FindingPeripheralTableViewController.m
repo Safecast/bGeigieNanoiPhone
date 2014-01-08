@@ -8,10 +8,8 @@
 
 #import "FindingPeripheralTableViewController.h"
 
-@interface FindingPeripheralTableViewController ()<CBCentralManagerDelegate>
-@property (strong, nonatomic) CBCentralManager      *centralManager;
+@interface FindingPeripheralTableViewController ()
 
-@property (nonatomic, strong) NSMutableArray        *foundPeripherals;
 
 @end
 
@@ -30,10 +28,9 @@
 {
     [super viewDidLoad];
     
-    _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-    
-    _foundPeripherals = [[NSMutableArray alloc] init];
-
+    if (!_peripheralNameArray) {
+        _peripheralNameArray = [[NSMutableArray alloc] init];
+    }
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
@@ -42,64 +39,11 @@
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
 
--(BOOL)theDeviceExitsInArray: (NSString *)peripheralName
+-(void)addPeripheralName:(NSString *)foundPeripheralName
 {
-    for (CBPeripheral *peripheral in _foundPeripherals) {
-        if ([peripheralName isEqualToString:peripheral.name]) {
-            return TRUE;
-        }
-    }
-    return FALSE;
+    [_peripheralNameArray addObject:foundPeripheralName];
+    [self.tableView reloadData];
 }
-
-#pragma mark - delegate methods
-/** centralManagerDidUpdateState is a required protocol method.
- *  Usually, you'd check for other states to make sure the current device supports LE, is powered on, etc.
- *  In this instance, we're just using it to wait for CBCentralManagerStatePoweredOn, which indicates
- *  the Central is ready to be used.
- */
-- (void)centralManagerDidUpdateState:(CBCentralManager *)central
-{
-    if (central.state != CBCentralManagerStatePoweredOn) {
-        
-        //if the centralmanage power off, set the state
-        return;
-    }
-    
-    //if central manager power on, change the state
-    [_centralManager scanForPeripheralsWithServices:nil
-                                            options:@{ CBCentralManagerScanOptionAllowDuplicatesKey : @NO }];
-    
-}
-/** This callback comes whenever a peripheral that is advertising the TRANSFER_SERVICE_UUID is discovered.
- *  We check the RSSI, to make sure it's close enough that we're interested in it, and if it is,
- *  we start the connection process
- */
-- (void)centralManager:(CBCentralManager *)central didDiscoverPeripheral:(CBPeripheral *)peripheral advertisementData:(NSDictionary *)advertisementData RSSI:(NSNumber *)RSSI
-{
-    
-    NSLog(@"identifier of peripheral:%@, data:%@",peripheral.identifier, peripheral.name);
-    
-    if ([peripheral.name hasPrefix:@"BLEbee"]) {
-        if (![self theDeviceExitsInArray:peripheral.name]) {
-            [_foundPeripherals addObject:peripheral];
-            [self.tableView reloadData];
-        }
-    }
-    /*
-     if (!_connectingPeripheral) {
-     [_centralManager stopScan];
-     
-     _connectingPeripheral = peripheral;
-     
-     [self.centralManager connectPeripheral:peripheral options:nil];
-     [self addStringToTextView:@"request to connect peripheral"];
-     }
-     */
-    
-}
-
-
 
 - (void)didReceiveMemoryWarning
 {
@@ -118,7 +62,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return _foundPeripherals.count;
+    return _peripheralNameArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -127,17 +71,16 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-    CBPeripheral *peripheral = [_foundPeripherals objectAtIndex:indexPath.row];
-    if (peripheral) {
-        cell.textLabel.text = peripheral.name;
-    }
+
+    cell.textLabel.text = [_peripheralNameArray objectAtIndex:indexPath.row];
+
     
     return cell;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    _peripheralToConnect = [_foundPeripherals objectAtIndex:indexPath.row];
+    [_delegate selectPeripheralByIndex:indexPath.row];
     [self.navigationController popViewControllerAnimated:YES];
 }
 
