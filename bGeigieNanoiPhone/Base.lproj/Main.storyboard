@@ -16,7 +16,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="yNS-s6-H2M">
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yNS-s6-H2M">
                                 <rect key="frame" x="40" y="96" width="240" height="437"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.87986288270000002" alpha="1" colorSpace="calibratedWhite"/>
@@ -25,6 +25,14 @@
                             </textView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerY" secondItem="yNS-s6-H2M" secondAttribute="centerY" constant="-30.5" id="OAK-Nk-jQz"/>
+                            <constraint firstItem="yNS-s6-H2M" firstAttribute="top" secondItem="aNc-m9-M9g" secondAttribute="bottom" constant="32" id="ZA3-5M-yBb"/>
+                            <constraint firstAttribute="trailing" secondItem="yNS-s6-H2M" secondAttribute="trailing" constant="40" id="iqU-bK-ZXM"/>
+                            <constraint firstAttribute="centerX" secondItem="yNS-s6-H2M" secondAttribute="centerX" id="msn-G6-a4x"/>
+                            <constraint firstItem="wlB-AK-Wmh" firstAttribute="top" secondItem="yNS-s6-H2M" secondAttribute="bottom" constant="35" id="tEz-gC-lyf"/>
+                            <constraint firstItem="yNS-s6-H2M" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="40" id="x5O-hq-jxv"/>
+                        </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="VD2-HA-jND">
                         <barButtonItem key="leftBarButtonItem" style="plain" id="ZgO-r1-rPo">
