@@ -42,37 +42,6 @@
     
     _foundPeripherals = [[NSMutableArray alloc] init];
 
-    
-    /*
-    _serviceUUID = [[NSUserDefaults standardUserDefaults] valueForKey:@"Service_UUID"];
-    if (!_serviceUUID) {
-       
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                        message:NSLocalizedString(@"Please provide service UUID in the Settings", nil)
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
-    _rxUUID =[[NSUserDefaults standardUserDefaults] valueForKey:@"RX_UUID"];
-    
-    if (!_rxUUID) {
-        
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Error", nil)
-                                                        message:NSLocalizedString(@"Please provide RX UUID in the Settings", nil)
-                                                       delegate:nil
-                                              cancelButtonTitle:@"OK"
-                                              otherButtonTitles:nil];
-        [alert show];
-    }
-    
-    if (!_rxUUID || !_serviceUUID) {
-        _startButton.hidden = TRUE;
-    }else{
-        _startButton.hidden = FALSE;
-    }
-      */
 }
 
 -(void)viewWillAppear:(BOOL)animated
@@ -152,23 +121,6 @@
     });
     
 }
--(NSString *)getSwitchValue
-{
-    /*
-    NSString *selectedUUID;
-    if (_txSwitch.on) {
-        selectedUUID = TX_CHARACTERISTIC_UUID;
-        NSLog(@"switch to TX");
-    }else{
-        selectedUUID = RX_CHARACTERISTIC_UUID;
-        NSLog(@"switch to RX");
-
-    }
-    return selectedUUID;
-     */
-    return _rxUUID;
-}
-
 
 #pragma mark - delegate methods
 /** centralManagerDidUpdateState is a required protocol method.
