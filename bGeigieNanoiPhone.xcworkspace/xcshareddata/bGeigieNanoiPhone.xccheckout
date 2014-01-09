@@ -5,36 +5,36 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>758E6E9D-0AFD-41C8-8A5F-7B54864E2B79</string>
+	<string>10B9AA78-F436-4367-87B0-A7B19A766456</string>
 	<key>IDESourceControlProjectName</key>
 	<string>bGeigieNanoiPhone</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>0740C038-3235-45D0-84E7-57FA79F4AB0B</key>
-		<string>ssh://bitbucket.org/yongping/bgeigienano-iphone.git</string>
+		<key>2BBEE9B6-0FBA-476A-8BF4-321CCF093D31</key>
+		<string>ssh://bitbucket.org/eyesjapan/bgeigienano-iphone.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>bGeigieNanoiPhone.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>0740C038-3235-45D0-84E7-57FA79F4AB0B</key>
+		<key>2BBEE9B6-0FBA-476A-8BF4-321CCF093D31</key>
 		<string>..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>ssh://bitbucket.org/yongping/bgeigienano-iphone.git</string>
+	<string>ssh://bitbucket.org/eyesjapan/bgeigienano-iphone.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>0740C038-3235-45D0-84E7-57FA79F4AB0B</string>
+	<string>2BBEE9B6-0FBA-476A-8BF4-321CCF093D31</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>0740C038-3235-45D0-84E7-57FA79F4AB0B</string>
+			<string>2BBEE9B6-0FBA-476A-8BF4-321CCF093D31</string>
 			<key>IDESourceControlWCCName</key>
-			<string>bGeigieNanoiPhone</string>
+			<string>bgeigienano-iphone</string>
 		</dict>
 	</array>
 </dict>
