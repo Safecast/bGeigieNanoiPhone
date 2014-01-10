@@ -12,7 +12,7 @@
 #import "SensorData.h"
 #import "SensorDataParser.h"
 
-@interface ViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate, FindingPeripheralDelegate>
+@interface ViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate, FindingPeripheralDelegate, NSURLConnectionDelegate>
 
 @property (strong, nonatomic) CBCentralManager      *centralManager;
 @property (strong, nonatomic) CBPeripheral          *connectingPeripheral;
@@ -330,7 +330,7 @@
             if (_uploadServerSwitch.on) {
                 [self postSensorData];
             }
-            NSLog(@"sensorData:%f,%f,%f,%f",sensorData.CO, sensorData.NOX,sensorData.temperature, sensorData.humidity);
+            NSLog(@"sensorData:%f,%f,%f,%f,%f,%f",sensorData.CO, sensorData.NOX,sensorData.temperature, sensorData.humidity,sensorData.latitude,sensorData.longitude);
         }
         _dataRecord = @"";
         
@@ -407,15 +407,16 @@
          if (sensor.radiation == 0) { //if the radiation value is zero, would not upload to safecast server
          return NO;
          }
-         NSString *requestURLFormat = @"https://api.safecast.org/measurements.json?api_key=%@&measurement[latitude]=%f&measurement[longitude]=%f&measurement[unit]=%@&measurement[value]=%f&measurement[device_id]=%@&measurement[captured_at]=%@";
+         NSString *requestURLFormat = @"https://api.safecast.org/measurements.json?api_key=%@&measurement[latitude]=%f&measurement[longitude]=%f&measurement[unit]=%@&measurement[value]=%f&measurement[device_id]=%@&measurement[captured_at]=%@&measurement[device_id]=%@";
          NSString *requestURLString = [NSString stringWithFormat:requestURLFormat,
-         @"o7AhMZBLVL8yqWf1WDK1",
+         @"q1LKu7RQ8s5pmyxunnDW",
          sensor.latitude,
          sensor.longitude,
          @"cpm",
          [sensor getCPMRadiation],
          sensor.deviceID,
-         sensor.capturedDate];
+         sensor.capturedDate,@"44"
+                                       ];
          
          NSMutableURLRequest *requestSC = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
          
@@ -446,7 +447,6 @@
     
     return YES;
 }
-
 
 
 

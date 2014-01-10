@@ -74,6 +74,8 @@ $BNXSTS,0210,23,45,12,0.304
     NSString *humilityValueString   = [dataArray objectAtIndex:17];
     NSString *COValueString         = [dataArray objectAtIndex:18];
     NSString *NOXValueString        = [dataArray objectAtIndex:19];
+    NSString *latitudeString        = [dataArray objectAtIndex:7];
+    NSString *longitudeString       = [dataArray objectAtIndex:9];
     
     [data setNowDate:       receivedDate];
     [data setRadiation:     [radiationValueString floatValue]/344.00];
@@ -85,6 +87,8 @@ $BNXSTS,0210,23,45,12,0.304
     [data setCO:            [self adjustCO:[COValueString   floatValue]]];
     [data setNOX:           [self adjustNOX:[NOXValueString floatValue]]];
     
+    [data setLatitude:      [self adjustToDecimalLatitude:latitudeString]];
+    [data setLongitude:     [self adjustToDecimalLongitude:longitudeString]];
     
     return data;
 }
@@ -95,7 +99,11 @@ $BNXSTS,0210,23,45,12,0.304
  */
 - (float)adjustCO: (float)rawCO
 {
-    return rawCO * 0.06434171 - 0.5958041554;
+    float adjustedValue = rawCO * 0.06434171 - 0.5958041554;
+    if (adjustedValue < 0) {
+        adjustedValue = 0;
+    }
+    return adjustedValue;
 }
 
 /** Adust NOX data by the formula: y = x * 0.157408338 - 0.0193973525, x is the raw data, y is the result data
@@ -104,7 +112,47 @@ $BNXSTS,0210,23,45,12,0.304
  */
 - (float)adjustNOX: (float)rawNOX
 {
-    return rawNOX * 0.157408338 - 0.0193973525;
+    float adjustedValue = rawNOX * 0.157408338 - 0.0193973525;
+    if (adjustedValue < 0) {
+        adjustedValue = 0;
+    }
+    return adjustedValue;
+}
+
+/** Adjust degree and minutes format latitude format to decimal format with the formual: decimal = degrees + minutes/60
+ @param latitudeString string: format ddmm.mmmm
+ @return float: the decimal latitude
+ */
+- (float)adjustToDecimalLatitude: (NSString *) latitudeString
+{
+    NSRange degreeRange;
+    degreeRange.length      = 2;
+    degreeRange.location    = 0;
+    
+    float degree = [[latitudeString substringWithRange:degreeRange] floatValue];
+    float minutes = [[latitudeString substringFromIndex:2] floatValue];
+    
+    float decimal = degree + minutes/60;
+    
+    return decimal;
+}
+
+/** Adjust degree and minutes format longitude format to decimal format with the formual: decimal = degrees + minutes/60
+ @param latitudeString string: format dddmm.mmmm
+ @return float: the decimal latitude
+ */
+- (float)adjustToDecimalLongitude: (NSString *) longitudeString
+{
+    NSRange degreeRange;
+    degreeRange.length      = 3;
+    degreeRange.location    = 0;
+    
+    float degree = [[longitudeString substringWithRange:degreeRange] floatValue];
+    float minutes = [[longitudeString substringFromIndex:3] floatValue];
+    
+    float decimal = degree + minutes/60;
+    
+    return decimal;
 }
 
 - (NSDate *)dateFromJSTString:(NSString *)dateString
