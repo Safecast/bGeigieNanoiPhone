@@ -266,15 +266,7 @@
             NSLog(@"found RX char");
             
         }
-        
-        /*
-        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:[self getSwitchValue]]]) {
-            
-            [peripheral setNotifyValue:YES forCharacteristic:characteristic];
 
-            
-            }
-         */
             
     }
     
@@ -354,6 +346,7 @@
         [self.centralManager connectPeripheral:_connectingPeripheral options:nil];
         [self addStringToTextView:@"request to connect peripheral"];
     }
+    [_centralManager stopScan];
 }
 
 

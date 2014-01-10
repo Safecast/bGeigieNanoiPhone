@@ -95,6 +95,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="messageOutputTextView" destination="yNS-s6-H2M" id="Ld6-Ei-DzQ"/>
+                        <outlet property="startButton" destination="OZU-lN-mgV" id="nPV-nh-SeY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -146,7 +147,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Zx8-Pd-0HY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="389" y="235"/>
+            <point key="canvasLocation" x="296" y="218"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
