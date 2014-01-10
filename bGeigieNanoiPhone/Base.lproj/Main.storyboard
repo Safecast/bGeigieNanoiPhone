@@ -17,7 +17,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="yNS-s6-H2M">
-                                <rect key="frame" x="40" y="148" width="240" height="385"/>
+                                <rect key="frame" x="40" y="168" width="240" height="385"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.87986288270000002" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -48,7 +48,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j4T-Hm-LiR">
-                                <rect key="frame" x="40" y="108" width="240" height="32"/>
+                                <rect key="frame" x="40" y="120" width="240" height="32"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Upload To server: " lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nhB-WI-kSW">
@@ -57,13 +57,10 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jJ-8J-Hgb">
-                                        <rect key="frame" x="187" y="2" width="33" height="30"/>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ovZ-UA-Zjl">
+                                        <rect key="frame" x="179" y="1" width="51" height="31"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="Start">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
+                                    </switch>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
@@ -71,21 +68,21 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="0tg-f9-HdI" firstAttribute="top" secondItem="aNc-m9-M9g" secondAttribute="bottom" constant="17" id="2We-vX-ZX3"/>
-                            <constraint firstItem="yNS-s6-H2M" firstAttribute="top" secondItem="j4T-Hm-LiR" secondAttribute="bottom" constant="8" id="2aR-aZ-rw7"/>
-                            <constraint firstItem="j4T-Hm-LiR" firstAttribute="top" secondItem="aNc-m9-M9g" secondAttribute="bottom" constant="44" id="3sh-Ao-CPL"/>
+                            <constraint firstItem="yNS-s6-H2M" firstAttribute="top" secondItem="j4T-Hm-LiR" secondAttribute="bottom" constant="16" id="2aR-aZ-rw7"/>
+                            <constraint firstItem="j4T-Hm-LiR" firstAttribute="top" secondItem="aNc-m9-M9g" secondAttribute="bottom" constant="56" id="3sh-Ao-CPL"/>
                             <constraint firstAttribute="centerX" secondItem="0tg-f9-HdI" secondAttribute="centerX" id="42k-x1-gm8"/>
                             <constraint firstItem="wlB-AK-Wmh" firstAttribute="top" secondItem="0tg-f9-HdI" secondAttribute="bottom" constant="456" id="77B-s7-Mvo"/>
                             <constraint firstItem="0tg-f9-HdI" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="40" id="CxB-Lf-25j"/>
                             <constraint firstItem="0tg-f9-HdI" firstAttribute="centerX" secondItem="j4T-Hm-LiR" secondAttribute="centerX" id="JVG-t1-bo1"/>
-                            <constraint firstAttribute="centerY" secondItem="yNS-s6-H2M" secondAttribute="centerY" constant="-56.5" id="OAK-Nk-jQz"/>
+                            <constraint firstAttribute="centerY" secondItem="yNS-s6-H2M" secondAttribute="centerY" constant="-76.5" id="OAK-Nk-jQz"/>
                             <constraint firstItem="0tg-f9-HdI" firstAttribute="leading" secondItem="j4T-Hm-LiR" secondAttribute="leading" id="OUQ-de-cWF"/>
-                            <constraint firstItem="yNS-s6-H2M" firstAttribute="top" secondItem="aNc-m9-M9g" secondAttribute="bottom" constant="84" id="ZA3-5M-yBb"/>
+                            <constraint firstItem="yNS-s6-H2M" firstAttribute="top" secondItem="aNc-m9-M9g" secondAttribute="bottom" constant="104" id="ZA3-5M-yBb"/>
                             <constraint firstItem="0tg-f9-HdI" firstAttribute="trailing" secondItem="j4T-Hm-LiR" secondAttribute="trailing" id="aP3-MA-C3V"/>
                             <constraint firstAttribute="trailing" secondItem="0tg-f9-HdI" secondAttribute="trailing" constant="40" id="hB2-ln-XxH"/>
                             <constraint firstAttribute="trailing" secondItem="yNS-s6-H2M" secondAttribute="trailing" constant="40" id="iqU-bK-ZXM"/>
                             <constraint firstAttribute="centerX" secondItem="yNS-s6-H2M" secondAttribute="centerX" id="msn-G6-a4x"/>
-                            <constraint firstItem="j4T-Hm-LiR" firstAttribute="top" secondItem="0tg-f9-HdI" secondAttribute="bottom" constant="-4" id="sip-GA-QNS"/>
-                            <constraint firstItem="wlB-AK-Wmh" firstAttribute="top" secondItem="yNS-s6-H2M" secondAttribute="bottom" constant="35" id="tEz-gC-lyf"/>
+                            <constraint firstItem="j4T-Hm-LiR" firstAttribute="top" secondItem="0tg-f9-HdI" secondAttribute="bottom" constant="8" id="sip-GA-QNS"/>
+                            <constraint firstItem="wlB-AK-Wmh" firstAttribute="top" secondItem="yNS-s6-H2M" secondAttribute="bottom" constant="15" id="tEz-gC-lyf"/>
                             <constraint firstItem="0tg-f9-HdI" firstAttribute="width" secondItem="j4T-Hm-LiR" secondAttribute="width" id="uyX-Vo-WzD"/>
                             <constraint firstItem="yNS-s6-H2M" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leading" constant="40" id="x5O-hq-jxv"/>
                         </constraints>
@@ -96,6 +93,7 @@
                     <connections>
                         <outlet property="messageOutputTextView" destination="yNS-s6-H2M" id="Ld6-Ei-DzQ"/>
                         <outlet property="startButton" destination="OZU-lN-mgV" id="nPV-nh-SeY"/>
+                        <outlet property="uploadServerSwitch" destination="ovZ-UA-Zjl" id="5Y8-jz-I6a"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
