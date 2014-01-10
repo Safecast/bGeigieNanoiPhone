@@ -35,6 +35,12 @@
 		BE9CC1A3187E365B00401717 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE3816D8187BC3C60005C7DE /* Images.xcassets */; };
 		BE9CC1A4187E365B00401717 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE3816C9187BC3C60005C7DE /* InfoPlist.strings */; };
 		BE9CC1A5187E365B00401717 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE3816D2187BC3C60005C7DE /* Main.storyboard */; };
+		BEDD77F6187FE5700089B779 /* SensorDataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDD77F2187FE5700089B779 /* SensorDataParser.m */; };
+		BEDD77F7187FE5700089B779 /* SensorDataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDD77F2187FE5700089B779 /* SensorDataParser.m */; };
+		BEDD77F8187FE5700089B779 /* SensorDataParser.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDD77F2187FE5700089B779 /* SensorDataParser.m */; };
+		BEDD7802187FE5D20089B779 /* SensorData.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDD7801187FE5D20089B779 /* SensorData.m */; };
+		BEDD7803187FE5D20089B779 /* SensorData.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDD7801187FE5D20089B779 /* SensorData.m */; };
+		BEDD7804187FE5D20089B779 /* SensorData.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDD7801187FE5D20089B779 /* SensorData.m */; };
 		CE5B0AB5187E5534002B16DF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5B0AB4187E5534002B16DF /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -75,6 +81,10 @@
 		BE3816FC187BF35C0005C7DE /* FindingPeripheralTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindingPeripheralTableViewController.m; sourceTree = "<group>"; };
 		BE9CC1A9187E365B00401717 /* bGeigieNanoiPhoneEnterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bGeigieNanoiPhoneEnterprise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE9CC1AA187E365C00401717 /* bGeigieNanoiPhone Enterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "bGeigieNanoiPhone Enterprise-Info.plist"; sourceTree = "<group>"; };
+		BEDD77F1187FE5700089B779 /* SensorDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorDataParser.h; sourceTree = "<group>"; };
+		BEDD77F2187FE5700089B779 /* SensorDataParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorDataParser.m; sourceTree = "<group>"; };
+		BEDD7800187FE5D20089B779 /* SensorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorData.h; sourceTree = "<group>"; };
+		BEDD7801187FE5D20089B779 /* SensorData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorData.m; sourceTree = "<group>"; };
 		CE5B0AB4187E5534002B16DF /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -154,6 +164,8 @@
 		BE3816C6187BC3C60005C7DE /* bGeigieNanoiPhone */ = {
 			isa = PBXGroup;
 			children = (
+				BEDD77FF187FE5D20089B779 /* Models */,
+				BEDD77ED187FE3960089B779 /* Utils */,
 				BE3816CF187BC3C60005C7DE /* AppDelegate.h */,
 				BE3816D0187BC3C60005C7DE /* AppDelegate.m */,
 				BE3816D2187BC3C60005C7DE /* Main.storyboard */,
@@ -195,6 +207,32 @@
 				BE3816E8187BC3C60005C7DE /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BEDD77ED187FE3960089B779 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BEDD77F0187FE5700089B779 /* Parsers */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		BEDD77F0187FE5700089B779 /* Parsers */ = {
+			isa = PBXGroup;
+			children = (
+				BEDD77F1187FE5700089B779 /* SensorDataParser.h */,
+				BEDD77F2187FE5700089B779 /* SensorDataParser.m */,
+			);
+			path = Parsers;
+			sourceTree = "<group>";
+		};
+		BEDD77FF187FE5D20089B779 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				BEDD7800187FE5D20089B779 /* SensorData.h */,
+				BEDD7801187FE5D20089B779 /* SensorData.m */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -357,7 +395,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEDD7802187FE5D20089B779 /* SensorData.m in Sources */,
 				BE3816D7187BC3C60005C7DE /* ViewController.m in Sources */,
+				BEDD77F6187FE5700089B779 /* SensorDataParser.m in Sources */,
 				BE3816D1187BC3C60005C7DE /* AppDelegate.m in Sources */,
 				BE3816CD187BC3C60005C7DE /* main.m in Sources */,
 				BE3816FD187BF35C0005C7DE /* FindingPeripheralTableViewController.m in Sources */,
@@ -368,7 +408,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEDD77F8187FE5700089B779 /* SensorDataParser.m in Sources */,
 				BE3816EC187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m in Sources */,
+				BEDD7804187FE5D20089B779 /* SensorData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,7 +418,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEDD7803187FE5D20089B779 /* SensorData.m in Sources */,
 				BE9CC199187E365B00401717 /* ViewController.m in Sources */,
+				BEDD77F7187FE5700089B779 /* SensorDataParser.m in Sources */,
 				BE9CC19A187E365B00401717 /* AppDelegate.m in Sources */,
 				BE9CC19B187E365B00401717 /* main.m in Sources */,
 				BE9CC19C187E365B00401717 /* FindingPeripheralTableViewController.m in Sources */,

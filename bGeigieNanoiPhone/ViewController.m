@@ -9,8 +9,10 @@
 
 #import "ViewController.h"
 #import "FindingPeripheralTableViewController.h"
+#import "SensorData.h"
+#import "SensorDataParser.h"
 
-@interface ViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate, FindingPeripheralDelegate>
+@interface ViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate, FindingPeripheralDelegate, NSURLConnectionDelegate>
 
 @property (strong, nonatomic) CBCentralManager      *centralManager;
 @property (strong, nonatomic) CBPeripheral          *connectingPeripheral;
@@ -23,9 +25,13 @@
 @property (weak, nonatomic) IBOutlet UISwitch *txSwitch;
 @property (weak, nonatomic) IBOutlet UIButton *startButton;
 @property (weak, nonatomic) IBOutlet UITextView *messageOutputTextView;
+@property (weak, nonatomic) IBOutlet UISwitch *uploadServerSwitch;
 
 @property (nonatomic, strong) NSMutableArray                        *foundPeripherals;
 @property (nonatomic, strong) FindingPeripheralTableViewController  *findPeripheralController;
+
+
+@property (nonatomic, retain) NSMutableArray        *sensorDataToUpload;
 
 
 - (IBAction)pushStartButton:(id)sender;
@@ -41,6 +47,7 @@
     _isStart = FALSE;
     
     _foundPeripherals = [[NSMutableArray alloc] init];
+    _sensorDataToUpload = [[NSMutableArray alloc] init];
 
 }
 
@@ -206,6 +213,15 @@
 
 -(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Caution", nil)
+                                                    message:NSLocalizedString(@"Peripheral disconnect.", nil)
+                                                   delegate:nil
+                                          cancelButtonTitle:@"OK"
+                                          otherButtonTitles:nil];
+    [alert show];
+    
+    [self stop];
+
     
 }
 
@@ -257,15 +273,7 @@
             NSLog(@"found RX char");
             
         }
-        
-        /*
-        if ([characteristic.UUID isEqual:[CBUUID UUIDWithString:[self getSwitchValue]]]) {
-            
-            [peripheral setNotifyValue:YES forCharacteristic:characteristic];
 
-            
-            }
-         */
             
     }
     
@@ -312,7 +320,20 @@
      */
     if ([stringFromData isEqualToString:@"$"]) {
         [self addStringToTextView: _dataRecord];
+
+        if (stringFromData && ![stringFromData isEqualToString:@""]) {
+            SensorDataParser *parser = [[SensorDataParser alloc] init];
+            SensorData *sensorData = [parser parseDataByString:_dataRecord];
+            if (sensorData) {
+                [_sensorDataToUpload addObject:sensorData];
+            }
+            if (_uploadServerSwitch.on) {
+                [self postSensorData];
+            }
+            NSLog(@"sensorData:%f,%f,%f,%f,%f,%f",sensorData.CO, sensorData.NOX,sensorData.temperature, sensorData.humidity,sensorData.latitude,sensorData.longitude);
+        }
         _dataRecord = @"";
+        
     }
     
     if (stringFromData) {
@@ -345,7 +366,88 @@
         [self.centralManager connectPeripheral:_connectingPeripheral options:nil];
         [self addStringToTextView:@"request to connect peripheral"];
     }
+    [_centralManager stopScan];
 }
+
+#pragma mark -method to post data to server
+- (BOOL)postSensorData {
+
+    if ([_sensorDataToUpload count] == 0) {
+        return NO;
+    }
+    
+    //Post data to Fukushima Wheel server
+    NSString    *urlString = @"http://fukushimawheel.org/map/api.php";
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    [request setTimeoutInterval:180];
+    
+    SensorDataParser *parser = [[SensorDataParser alloc] init];
+    NSMutableArray *dataDictArray = [[NSMutableArray alloc] init];
+    for (SensorData *sensor in _sensorDataToUpload) {
+        NSDate *captureDate = [parser dateFromUTCString:sensor.capturedDate];
+        NSString *dateString = [parser dateStringOfJST:captureDate];
+        NSDictionary *singleDataDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [NSString stringWithFormat:@"%f", sensor.latitude],   @"latitude",
+                                        [NSString stringWithFormat:@"%f", sensor.longitude],  @"longitude",
+                                        [NSString stringWithFormat:@"%f", sensor.distance],   @"distance",
+                                        [NSString stringWithFormat:@"%f", sensor.temperature],@"temperature",
+                                        [NSString stringWithFormat:@"%f", sensor.humidity],   @"humidity",
+                                        [NSString stringWithFormat:@"%f", sensor.co2],        @"co2",
+                                        [NSString stringWithFormat:@"%f", sensor.radiation],  @"radiation",
+                                        [NSString stringWithFormat:@"%f", sensor.CO],  @"co",
+                                        [NSString stringWithFormat:@"%f", sensor.NOX],  @"nox",
+                                        dateString, @"capture_at",
+                                        nil];
+        
+        [dataDictArray addObject:singleDataDict];
+        
+        
+         //Post data to safecast
+         if (sensor.radiation == 0) { //if the radiation value is zero, would not upload to safecast server
+         return NO;
+         }
+         NSString *requestURLFormat = @"https://api.safecast.org/measurements.json?api_key=%@&measurement[latitude]=%f&measurement[longitude]=%f&measurement[unit]=%@&measurement[value]=%f&measurement[device_id]=%@&measurement[captured_at]=%@&measurement[device_id]=%@";
+         NSString *requestURLString = [NSString stringWithFormat:requestURLFormat,
+         @"q1LKu7RQ8s5pmyxunnDW",
+         sensor.latitude,
+         sensor.longitude,
+         @"cpm",
+         [sensor getCPMRadiation],
+         sensor.deviceID,
+         sensor.capturedDate,@"44"
+                                       ];
+         
+         NSMutableURLRequest *requestSC = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
+         
+         NSLog(@"request url to safecast server:%@",requestURLString);
+         [requestSC setHTTPBody:nil];
+         [requestSC setHTTPMethod:@"POST"];
+         
+         //During testing period, disable to upload datas to safecast server
+         [NSURLConnection connectionWithRequest:requestSC delegate:self];
+        
+    }
+    
+    NSDictionary *bodyDict = [NSDictionary dictionaryWithObjectsAndKeys:dataDictArray, @"data", nil];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:bodyDict options:NSJSONWritingPrettyPrinted error:nil];
+    
+    NSLog(@"post data to api server:%@",[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    
+    //NSLog(@"url = %@, body =  %@", urlString, bodyString);
+    [request setHTTPBody:jsonData];
+    [request setHTTPMethod:@"POST"];
+    
+    //[[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [NSURLConnection connectionWithRequest:request delegate:self];
+    
+    [_sensorDataToUpload removeAllObjects];
+    
+    
+    
+    return YES;
+}
+
 
 
 
