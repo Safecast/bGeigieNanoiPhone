@@ -9,6 +9,8 @@
 
 #import "ViewController.h"
 #import "FindingPeripheralTableViewController.h"
+#import "SensorData.h"
+#import "SensorDataParser.h"
 
 @interface ViewController ()<CBCentralManagerDelegate, CBPeripheralDelegate, FindingPeripheralDelegate>
 
@@ -313,7 +315,14 @@
      */
     if ([stringFromData isEqualToString:@"$"]) {
         [self addStringToTextView: _dataRecord];
+
+        if (stringFromData && ![stringFromData isEqualToString:@""]) {
+            SensorDataParser *parser = [[SensorDataParser alloc] init];
+            SensorData *sensorData = [parser parseDataByString:_dataRecord];
+            NSLog(@"sensorData:%f,%f,%f,%f",sensorData.CO, sensorData.NOX,sensorData.temperature, sensorData.humidity);
+        }
         _dataRecord = @"";
+        
     }
     
     if (stringFromData) {

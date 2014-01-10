@@ -14,7 +14,7 @@
 - (SensorData*)parseData:(NSData*)data {
     
     
-    SensorData *sensor = [[[SensorData alloc] initForDemo] retain];
+    SensorData *sensor = [[SensorData alloc] initForDemo];
     return sensor;
 }
 

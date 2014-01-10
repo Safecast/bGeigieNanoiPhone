@@ -72,7 +72,7 @@
         latitude = (0.003 / ((float)(rand() % 100) + 1)) + 36.5;
         longitude = (0.003 / ((float)(rand() % 100) + 1)) + 135.5;
         
-        nowDate = [[NSDate date] retain];
+        nowDate = [NSDate date];
         temperature = 15.0 + (1.0 / (float)(rand() % 100) + 1) * 5;
         humidity = (float)(rand() % 1000) / 10.0;
         co2 = 50.0 + (rand() % 100);
@@ -92,14 +92,14 @@
     return [NSString stringWithFormat:@"time = %@, temperature = %f, humidity = %f,radiation = %f", nowDate, temperature, humidity, radiation];
 }
 
-
+/*
 - (void)dealloc {
     if(nowDate)
         [nowDate release];
     
     [super dealloc];
 }
-
+*/
 
 - (NSDictionary*)getDictionary
 {
