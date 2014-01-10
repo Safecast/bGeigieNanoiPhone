@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BE9CC197187E365B00401717"
-               BuildableName = "bGeigieNanoiPhone.app"
+               BuildableName = "bGeigieNanoiPhoneEnterprise.app"
                BlueprintName = "bGeigieNanoiPhone Enterprise"
                ReferencedContainer = "container:bGeigieNanoiPhone.xcodeproj">
             </BuildableReference>
@@ -43,7 +43,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BE9CC197187E365B00401717"
-            BuildableName = "bGeigieNanoiPhone.app"
+            BuildableName = "bGeigieNanoiPhoneEnterprise.app"
             BlueprintName = "bGeigieNanoiPhone Enterprise"
             ReferencedContainer = "container:bGeigieNanoiPhone.xcodeproj">
          </BuildableReference>
@@ -61,7 +61,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BE9CC197187E365B00401717"
-            BuildableName = "bGeigieNanoiPhone.app"
+            BuildableName = "bGeigieNanoiPhoneEnterprise.app"
             BlueprintName = "bGeigieNanoiPhone Enterprise"
             ReferencedContainer = "container:bGeigieNanoiPhone.xcodeproj">
          </BuildableReference>
