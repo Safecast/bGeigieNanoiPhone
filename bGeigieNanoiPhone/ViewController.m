@@ -442,7 +442,7 @@
                                      @"latitude":[NSNumber numberWithFloat:sensor.latitude],
                                      @"longitude":[NSNumber numberWithFloat:sensor.longitude],
                                      @"unit":@"cpm",
-                                     @"value":[NSNumber numberWithFloat:sensor.radiation],
+                                     @"value":[NSNumber numberWithFloat:[sensor getCPMRadiation]],
                                      @"device_id":@"44",
                                      @"captured_at":sensor.capturedDate};
         
