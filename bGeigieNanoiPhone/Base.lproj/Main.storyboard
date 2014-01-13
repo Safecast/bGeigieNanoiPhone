@@ -132,7 +132,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="44" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qRV-mP-XMj">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qRV-mP-XMj">
                                                     <rect key="frame" x="107" y="8" width="208" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -164,7 +164,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="q1LKu7RQ8s5pmyxunnDW" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="blX-Ar-AE6">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="blX-Ar-AE6">
                                                     <rect key="frame" x="107" y="8" width="207" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -199,7 +199,13 @@
                             <outlet property="delegate" destination="w7w-df-cay" id="wpf-rX-fYM"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="bMU-u7-3sv"/>
+                    <navigationItem key="navigationItem" title="Settings" id="bMU-u7-3sv">
+                        <barButtonItem key="rightBarButtonItem" title="Rob" id="qe8-ww-2UW">
+                            <connections>
+                                <action selector="pushRob:" destination="w7w-df-cay" id="arp-GB-RJE"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="apiKeyTextfield" destination="blX-Ar-AE6" id="Ldl-ZW-fKC"/>
                         <outlet property="deviceIDTextfield" destination="qRV-mP-XMj" id="hhu-Nr-3pn"/>

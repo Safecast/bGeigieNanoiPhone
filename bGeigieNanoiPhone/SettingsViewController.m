@@ -11,6 +11,7 @@
 @interface SettingsViewController () <UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *apiKeyTextfield;
 @property (weak, nonatomic) IBOutlet UITextField *deviceIDTextfield;
+- (IBAction)pushRob:(id)sender;
 
 @end
 
@@ -140,4 +141,9 @@
     }
 }
 
+- (IBAction)pushRob:(id)sender {
+    
+    _apiKeyTextfield.text = @"q1LKu7RQ8s5pmyxunnDW";
+    _deviceIDTextfield.text = @"44";
+}
 @end
