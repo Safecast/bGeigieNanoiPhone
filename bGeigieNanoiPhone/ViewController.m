@@ -31,11 +31,16 @@
 @property (nonatomic, strong) NSMutableArray                        *foundPeripherals;
 @property (nonatomic, strong) FindingPeripheralTableViewController  *findPeripheralController;
 
+@property (nonatomic, retain) NSString      *apiKey;
+@property (nonatomic, retain) NSString      *deviceID;
+@property (nonatomic, retain) NSString      *safecastAPIAddress;
+
 
 @property (nonatomic, retain) NSMutableArray        *sensorDataToUpload;
 
 
 - (IBAction)pushStartButton:(id)sender;
+- (IBAction)changeSwitchState:(id)sender;
 
 @end
 
@@ -75,6 +80,26 @@
         [_findPeripheralController setDelegate:self];
         [self.navigationController pushViewController:_findPeripheralController animated:YES];
         
+    }
+}
+
+- (IBAction)changeSwitchState:(id)sender {
+    if (_uploadServerSwitch.on) {
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        NSString *apiKey = [ud valueForKey:@"apiKey"];
+        NSString *deviceID = [ud valueForKey:@"deviceID"];
+        if (!deviceID || !apiKey || [deviceID isEqualToString:@""] || [apiKey isEqualToString:@""]) {
+            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Caution", nil)
+                                                            message:NSLocalizedString(@"Device ID or API Key empty", nil)
+                                                           delegate:nil
+                                                  cancelButtonTitle:@"OK"
+                                                  otherButtonTitles:nil];
+            [alert show];
+            _uploadServerSwitch.on = FALSE;
+        }else{
+            _apiKey = apiKey;
+            _deviceID = deviceID;
+        }
     }
 }
 
@@ -414,27 +439,6 @@
         if (sensor.radiation == 0) { //if the radiation value is zero, would not upload to safecast server
             return NO;
         }
-        /*
-         NSString *requestURLFormat = @"https://api.safecast.org/measurements.json?api_key=%@&measurement[latitude]=%f&measurement[longitude]=%f&measurement[unit]=%@&measurement[value]=%f&measurement[device_id]=%@&measurement[captured_at]=%@&measurement[device_id]=%@";
-         NSString *requestURLString = [NSString stringWithFormat:requestURLFormat,
-         @"q1LKu7RQ8s5pmyxunnDW",
-         sensor.latitude,
-         sensor.longitude,
-         @"cpm",
-         [sensor getCPMRadiation],
-         sensor.deviceID,
-         sensor.capturedDate,@"44"
-         ];
-         
-         NSMutableURLRequest *requestSC = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:requestURLString]];
-         
-         NSLog(@"request url to safecast server:%@",requestURLString);
-         [requestSC setHTTPBody:nil];
-         [requestSC setHTTPMethod:@"POST"];
-         
-         //During testing period, disable to upload datas to safecast server
-         [NSURLConnection connectionWithRequest:requestSC delegate:self];
-         */
         
         AFHTTPRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
         
@@ -443,12 +447,12 @@
                                      @"longitude":[NSNumber numberWithFloat:sensor.longitude],
                                      @"unit":@"cpm",
                                      @"value":[NSNumber numberWithFloat:[sensor getCPMRadiation]],
-                                     @"device_id":@"44",
+                                     @"device_id":_deviceID,
                                      @"captured_at":sensor.capturedDate};
         
         
         
-        NSMutableURLRequest *request = [serializer requestWithMethod:@"POST" URLString:@"http://176.56.236.75/safecast/index.php?api_key=q1LKu7RQ8s5pmyxunnDW" parameters:parameters];
+        NSMutableURLRequest *request = [serializer requestWithMethod:@"POST" URLString: [NSString stringWithFormat:@"http://176.56.236.75/safecast/index.php?api_key=%@",_apiKey]  parameters:parameters];
         //Add your request object to an AFHTTPRequestOperation
         AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
         [operation setCompletionBlockWithSuccess:
