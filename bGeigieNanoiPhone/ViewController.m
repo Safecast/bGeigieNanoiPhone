@@ -107,9 +107,6 @@
 -(void)start
 {
     _centralManager = [[CBCentralManager alloc] initWithDelegate:self queue:nil];
-    [_startButton setTitle:@"Stop" forState:UIControlStateNormal];
-    _isStart = TRUE;
-    
     _foundPeripherals = [[NSMutableArray alloc] init];
     
 }
@@ -391,8 +388,11 @@
         _connectingPeripheral.delegate = self;
         [self.centralManager connectPeripheral:_connectingPeripheral options:nil];
         [self addStringToTextView:@"request to connect peripheral"];
+        [_centralManager stopScan];
+        
+        [_startButton setTitle:@"Stop" forState:UIControlStateNormal];
+        _isStart = TRUE;
     }
-    [_centralManager stopScan];
 }
 
 #pragma mark -method to post data to server
