@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Eyes, JAPAN. All rights reserved.
 //
 #import <CoreBluetooth/CoreBluetooth.h>
-#import "AFNetworking.h"
+#import <AFNetworking/AFNetworking.h>
 
 #import "ViewController.h"
 #import "FindingPeripheralTableViewController.h"
