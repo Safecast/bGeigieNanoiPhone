@@ -649,7 +649,7 @@
 					"\"${PODS_ROOT}/Headers/TestFlightSDK\"",
 				);
 				INFOPLIST_FILE = "bGeigieNanoiPhone/bGeigieNanoiPhone Enterprise-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "\"$(PODS_ROOT)/TestFlightSDK\"";
 				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_NAME = bGeigieNanoiPhoneEnterprise;
@@ -679,7 +679,7 @@
 					"\"${PODS_ROOT}/Headers/TestFlightSDK\"",
 				);
 				INFOPLIST_FILE = "bGeigieNanoiPhone/bGeigieNanoiPhone Enterprise-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				LIBRARY_SEARCH_PATHS = "\"$(PODS_ROOT)/TestFlightSDK\"";
 				PODS_ROOT = "${SRCROOT}/Pods";
 				PRODUCT_NAME = bGeigieNanoiPhoneEnterprise;
