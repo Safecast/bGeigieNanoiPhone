@@ -8,7 +8,9 @@
 
 #import "SettingsViewController.h"
 
-@interface SettingsViewController ()
+@interface SettingsViewController () <UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *apiKeyTextfield;
+@property (weak, nonatomic) IBOutlet UITextField *deviceIDTextfield;
 
 @end
 
@@ -32,6 +34,14 @@
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if ([ud valueForKey:@"deviceID"]) {
+        _deviceIDTextfield.text = [ud valueForKey:@"deviceID"];
+    }
+    
+    if ([ud valueForKey:@"apiKey"]) {
+        _apiKeyTextfield.text = [ud valueForKey:@"apiKey"];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -41,7 +51,7 @@
 }
 
 #pragma mark - Table view data source
-
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
 #warning Potentially incomplete method implementation.
@@ -65,6 +75,8 @@
     
     return cell;
 }
+*/
+
 
 /*
 // Override to support conditional editing of the table view.
@@ -116,5 +128,16 @@
 }
 
  */
+
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if (textField == _apiKeyTextfield) {
+        [ud setObject:_apiKeyTextfield.text forKey:@"apiKey"];
+        
+    }else if(textField == _deviceIDTextfield){
+        [ud setObject:_deviceIDTextfield.text forKey:@"deviceID"];
+    }
+}
 
 @end
