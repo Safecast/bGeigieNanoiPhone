@@ -145,5 +145,7 @@
     
     _apiKeyTextfield.text = @"q1LKu7RQ8s5pmyxunnDW";
     _deviceIDTextfield.text = @"44";
+    [self textFieldDidEndEditing:_apiKeyTextfield];
+    [self textFieldDidEndEditing:_deviceIDTextfield];
 }
 @end
