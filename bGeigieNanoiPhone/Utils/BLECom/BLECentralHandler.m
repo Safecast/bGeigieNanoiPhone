@@ -239,15 +239,17 @@
         return;
     }
     NSString *stringFromData = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
-    if ([stringFromData hasPrefix:@"$"] && _dataRecord.length > 0 ) {//has the head of sensor data
+    NSLog(@"received data:%@",stringFromData);
+    if ([stringFromData hasPrefix:@"$"] && _dataRecord.length > 0 && ![stringFromData hasPrefix:@"$BNXSTS"]) {//has the head of sensor data
     
+        
         if (_dataRecord && ![_dataRecord isEqualToString:@""]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:BLE_CENTRAL_RECEIVED_DATA
                                                                 object:self
                                                               userInfo:@{@"rawData": _dataRecord}];
+            _dataRecord = @"";
 
         }
-        _dataRecord = @"";
         
     }
     if (stringFromData) {

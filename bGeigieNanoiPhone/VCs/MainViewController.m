@@ -12,6 +12,8 @@
 #import "FindingPeripheralTableViewController.h"
 #import "NotificationSharedHeader.h"
 #import "SensorDataParser.h"
+#import <AFNetworking/AFNetworking.h>
+
 
 @interface MainViewController ()<UIPageViewControllerDataSource>
 
@@ -25,6 +27,13 @@
 @property(nonatomic, assign) BOOL                   isBLEConnected;
 
 @property (weak, nonatomic) IBOutlet UIButton *bleConnectionButton;
+
+//for uploading
+@property (nonatomic, retain) NSString      *apiKey;
+@property (nonatomic, retain) NSString      *deviceID;
+@property (nonatomic, retain) NSString      *safecastAPIAddress;
+@property (nonatomic, retain) NSMutableArray        *sensorDataToUpload;
+
 
 
 - (IBAction)pushBLEConnectionButton:(id)sender;
@@ -46,6 +55,7 @@
     [super viewDidLoad];
     
     _isBLEConnected = FALSE;
+    _sensorDataToUpload = [[NSMutableArray alloc] init];
 
     //regiester to be observer of BLE notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectedToPeripheral:) name:BLE_PERIPHERIAL_CONNECTED object:nil];
@@ -185,8 +195,7 @@
     NSString *sensorRawData = [notification.userInfo objectForKey:@"rawData"];
     SensorDataParser *parser = [[SensorDataParser alloc] init];
     NSDictionary *parsedResult = [parser parseDataByString:sensorRawData];
-    
-    NSLog(@"received result:%@",parsedResult);
+    NSLog(@"parserResult:%@",parsedResult);
     if (parsedResult) {
         NSArray *dataTypesArray = [parsedResult objectForKey:@"dataTypes"];
         NSArray *valueArray = [parsedResult objectForKey:@"dataValues"];
@@ -194,10 +203,112 @@
         _dataTypes = dataTypesArray;
         _dataValues = valueArray;
         _dataUnits = unitArray;
+        SensorData *sensorData = [parser sensorDataFromDict:parsedResult];
+        
+        if (sensorData) {
+            [[NSNotificationCenter defaultCenter] postNotificationName:RADIATION_NEED_TO_UPDATA object:self userInfo:@{@"dataType": [_dataTypes objectAtIndex:0], @"dataValue":[_dataValues objectAtIndex:0], @"dataUnit":[_dataUnits objectAtIndex:0]}];
+            [_sensorDataToUpload addObject:sensorData];
+            [self postSensorData];
+        }
+
 
     }
     
 }
 
+#pragma mark -method to post data to server
+- (BOOL)postSensorData {
+    
+    if ([_sensorDataToUpload count] == 0) {
+        return NO;
+    }
+    
+    //Post data to Fukushima Wheel server
+    NSString    *urlString = @"http://fukushimawheel.org/map/api.php";
+    
+    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] initWithURL:[NSURL URLWithString:urlString]];
+    [request setTimeoutInterval:180];
+    
+    SensorDataParser *parser = [[SensorDataParser alloc] init];
+    NSMutableArray *dataDictArray = [[NSMutableArray alloc] init];
+    for (SensorData *sensor in _sensorDataToUpload) {
+        
+        //if the location is empty, wont upload
+        if (sensor.longitude == 0 || sensor.latitude == 0) {
+            continue;
+        }
+        
+        NSDate *captureDate = [parser dateFromUTCString:sensor.capturedDate];
+        NSString *dateString = [parser dateStringOfJST:captureDate];
+        NSDictionary *singleDataDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        [NSString stringWithFormat:@"%f", sensor.latitude],   @"latitude",
+                                        [NSString stringWithFormat:@"%f", sensor.longitude],  @"longitude",
+                                        [NSString stringWithFormat:@"%f", sensor.distance],   @"distance",
+                                        [NSString stringWithFormat:@"%f", sensor.temperature],@"temperature",
+                                        [NSString stringWithFormat:@"%f", sensor.humidity],   @"humidity",
+                                        [NSString stringWithFormat:@"%f", sensor.co2],        @"co2",
+                                        [NSString stringWithFormat:@"%f", sensor.radiation],  @"radiation",
+                                        [NSString stringWithFormat:@"%f", sensor.CO],  @"co",
+                                        [NSString stringWithFormat:@"%f", sensor.NOX],  @"nox",
+                                        dateString, @"capture_at",
+                                        nil];
+        
+        [dataDictArray addObject:singleDataDict];
+        
+        
+        //Post data to safecast
+        if (sensor.radiation == 0) { //if the radiation value is zero, would not upload to safecast server
+            return NO;
+        }
+        
+        AFHTTPRequestSerializer *serializer = [AFJSONRequestSerializer serializer];
+        
+        NSDictionary *parameters = @{
+                                     @"latitude":[NSNumber numberWithFloat:sensor.latitude],
+                                     @"longitude":[NSNumber numberWithFloat:sensor.longitude],
+                                     @"unit":@"cpm",
+                                     @"value":[NSNumber numberWithFloat:[sensor getCPMRadiation]],
+                                     @"device_id":_deviceID,
+                                     @"captured_at":sensor.capturedDate};
+        
+        
+        
+        NSMutableURLRequest *request = [serializer requestWithMethod:@"POST" URLString: [NSString stringWithFormat:@"http://176.56.236.75/safecast/index.php?api_key=%@",_apiKey]  parameters:parameters];
+        //Add your request object to an AFHTTPRequestOperation
+        AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+        [operation setCompletionBlockWithSuccess:
+         ^(AFHTTPRequestOperation *operation,
+           id responseObject) {
+             NSLog(@"response from server after upload:%@",operation.responseString);
+             
+         } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+             NSLog(@"error when upload to server:%@",error.description);
+             
+         }];
+        
+        [operation start];
+        
+        
+        
+    }
+    /*
+    NSDictionary *bodyDict = [NSDictionary dictionaryWithObjectsAndKeys:dataDictArray, @"data", nil];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:bodyDict options:NSJSONWritingPrettyPrinted error:nil];
+    
+    NSLog(@"post data to api server:%@",[[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
+    
+    //NSLog(@"url = %@, body =  %@", urlString, bodyString);
+    [request setHTTPBody:jsonData];
+    [request setHTTPMethod:@"POST"];
+    
+    //[[NSURLConnection alloc] initWithRequest:request delegate:self];
+    [NSURLConnection connectionWithRequest:request delegate:self];
+    */
+    [_sensorDataToUpload removeAllObjects];
+    
+    
+    
+    return YES;
+}
 
 @end

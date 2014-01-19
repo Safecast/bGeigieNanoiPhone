@@ -16,5 +16,8 @@
 #define BLE_PERIPHERIAL_CONNECTED           @"BLEPeripheralConnected"
 #define BLE_PERIPHERIAL_DISCONNECTED        @"BLEPeripheralDisconnected"
 
+//for update data
+#define RADIATION_NEED_TO_UPDATA            @"RadiationNeedToUpdate"
+
 
 #endif

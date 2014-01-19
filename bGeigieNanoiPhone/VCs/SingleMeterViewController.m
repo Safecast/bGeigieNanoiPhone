@@ -7,6 +7,7 @@
 //
 
 #import "SingleMeterViewController.h"
+#import "NotificationSharedHeader.h"
 
 @interface SingleMeterViewController ()
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -29,6 +30,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:RADIATION_NEED_TO_UPDATA object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,6 +45,18 @@
     _valueLabel.text = _dataValue;
     _unitLabel.text = _dataUnit;
 }
+
+-(void)updateData: (NSNotification *) notification
+{
+    _dataType = [notification.userInfo objectForKey:@"dataType"];
+    _dataValue = [notification.userInfo objectForKey:@"dataValue"];
+    _dataUnit = [notification.userInfo objectForKey:@"dataUnit"];
+    
+    _titleLabel.text = _dataType;
+    _valueLabel.text = _dataValue;
+    _unitLabel.text = _dataUnit;
+}
+
 
 
 @end

@@ -8,6 +8,10 @@
 
 #import "SensorDataParser.h"
 
+@interface SensorDataParser()
+
+@end
+
 @implementation SensorDataParser
 
 
@@ -134,6 +138,42 @@ $BNXSTS,0210,23,45,12,0.304
     NSArray *unitArray = @[@"C", @"%",@"PPM", @"PPM"];
     
     return @{@"dataTypes":dataTypesArray, @"dataValues":valueArray, @"dataUnits":unitArray};
+}
+
+-(SensorData *)sensorDataFromDict: (NSDictionary *)dict
+{
+    SensorData *sensorData = [[SensorData alloc] init];
+    
+    if (!([dict objectForKey:@"dataTypes"] && [dict objectForKey:@"dataValues"] && [dict objectForKey:@"latitude"] && [dict objectForKey:@"longitude"])) {
+        return nil;
+    }
+    
+    NSArray *dataTypeArray =   [dict objectForKey:@"dataTypes"];
+    NSArray *dataValueArray =  [dict objectForKey:@"dataValues"];
+    
+    for (int i= 0; i < dataTypeArray.count; i++) {
+        NSString *dataType = [dataTypeArray objectAtIndex:i];
+        NSString *dataValue = [dataValueArray objectAtIndex:i];
+        
+        if ([dataType isEqualToString:@"Radiation"]) {
+            sensorData.radiation = [dataValue floatValue];
+        }else if([dataType isEqualToString:@"Tempreature"]) {
+            sensorData.temperature = [dataValue floatValue];
+        }else if([dataType isEqualToString:@"Humility"]) {
+            sensorData.humidity = [dataValue floatValue];
+        }else if([dataType isEqualToString:@"CO"]) {
+            sensorData.CO = [dataValue floatValue];
+        }else if([dataType isEqualToString:@"NOX"]) {
+            sensorData.NOX = [dataValue floatValue];
+        }
+    
+    }
+    
+    sensorData.latitude = [[dict objectForKey:@"latitude"] floatValue];
+    sensorData.longitude = [[dict objectForKey:@"longitude"] floatValue];
+    
+    return sensorData;
+    
 }
 
 
