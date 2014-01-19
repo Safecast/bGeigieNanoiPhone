@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController.h"
+#import "SingleMeterViewController.h"
 
 @interface MainViewController ()
 
@@ -27,7 +28,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    UIStoryboard *sb = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+
+    SingleMeterViewController *viewController1 = [sb instantiateViewControllerWithIdentifier:@"SingleMeterViewController"];
+    SingleMeterViewController *viewController2 = [sb instantiateViewControllerWithIdentifier:@"SingleMeterViewController"];
+    viewController2.titleLabel.text = @"Humility";
+    viewController2.valueLabel.text = @"20";
+    viewController2.unitLabel.text = @"%";
+    
+    NSArray *pagesArray = @[viewController1, viewController2];
+    
+    
 }
+
 
 - (void)didReceiveMemoryWarning
 {
