@@ -1,19 +1,23 @@
 //
-//  FindingPeripheralTableViewController.m
+//  SettingsViewController.m
 //  bGeigieNanoiPhone
 //
-//  Created by Chen Yongping on 1/7/14.
+//  Created by Chen Yongping on 1/13/14.
 //  Copyright (c) 2014 Eyes, JAPAN. All rights reserved.
 //
 
-#import "FindingPeripheralTableViewController.h"
+#import "SettingsViewController.h"
 
-@interface FindingPeripheralTableViewController ()
-
+@interface SettingsViewController () <UITextFieldDelegate>
+@property (weak, nonatomic) IBOutlet UITextField *apiKeyTextfield;
+@property (weak, nonatomic) IBOutlet UITextField *deviceIDTextfield;
+- (IBAction)pushRob:(id)sender;
+@property (weak, nonatomic) IBOutlet UISwitch *uploadSwitch;
+- (IBAction)switchToUpload:(id)sender;
 
 @end
 
-@implementation FindingPeripheralTableViewController
+@implementation SettingsViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -27,22 +31,24 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    if (!_peripheralNameArray) {
-        _peripheralNameArray = [[NSMutableArray alloc] init];
-    }
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-}
-
--(void)addPeripheralName:(NSString *)foundPeripheralName
-{
-    [_peripheralNameArray addObject:foundPeripheralName];
-    [self.tableView reloadData];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if ([ud valueForKey:@"deviceID"]) {
+        _deviceIDTextfield.text = [ud valueForKey:@"deviceID"];
+    }
+    
+    if ([ud valueForKey:@"apiKey"]) {
+        _apiKeyTextfield.text = [ud valueForKey:@"apiKey"];
+    }
+    
+    if ([ud valueForKey:@"uploadToServer"]) {
+        _uploadSwitch.on = [[ud valueForKey:@"uploadToServer"] boolValue];
+    }
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,37 +58,32 @@
 }
 
 #pragma mark - Table view data source
-
+/*
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 1;
+    return 0;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return _peripheralNameArray.count;
+    return 0;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"peripheralCell";
+    static NSString *CellIdentifier = @"Cell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
-
-    cell.textLabel.text = [_peripheralNameArray objectAtIndex:indexPath.row];
-
     
     return cell;
 }
+*/
 
--(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [_delegate selectPeripheralByIndex:indexPath.row];
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 /*
 // Override to support conditional editing of the table view.
@@ -135,4 +136,27 @@
 
  */
 
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    if (textField == _apiKeyTextfield) {
+        [ud setObject:_apiKeyTextfield.text forKey:@"apiKey"];
+        
+    }else if(textField == _deviceIDTextfield){
+        [ud setObject:_deviceIDTextfield.text forKey:@"deviceID"];
+    }
+}
+
+- (IBAction)pushRob:(id)sender {
+    
+    _apiKeyTextfield.text = @"q1LKu7RQ8s5pmyxunnDW";
+    _deviceIDTextfield.text = @"44";
+    [self textFieldDidEndEditing:_apiKeyTextfield];
+    [self textFieldDidEndEditing:_deviceIDTextfield];
+}
+- (IBAction)switchToUpload:(id)sender {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:[NSNumber numberWithBool:_uploadSwitch.on] forKey:@"uploadToServer"];
+
+}
 @end

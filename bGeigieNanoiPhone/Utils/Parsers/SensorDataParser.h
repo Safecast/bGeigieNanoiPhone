@@ -2,8 +2,8 @@
 //  SensorDataParser.h
 //  GreenSmile
 //
-//  Created by 金田 祐也 on 6/13/12.
-//  Copyright (c) 2012 会津大学. All rights reserved.
+//  Created by Chen Yongping on 1/13/14.
+//  Copyright (c) 2014 Eyes, JAPAN. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -15,8 +15,9 @@
 
 @interface SensorDataParser : NSObject
 
-- (SensorData*)parseData:(NSData*)data;
-- (SensorData*)parseDataByString:(NSString*)rawString;
+- (NSDictionary*)parseDataByString:(NSString*)rawString;
+- (SensorData *)sensorDataFromDict: (NSDictionary *)dict;
+
 
 - (NSString*)dateStringOfUTC: (NSDate *)date;
 - (NSString*)dateStringOfJST: (NSDate *)date;

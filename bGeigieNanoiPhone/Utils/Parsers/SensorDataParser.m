@@ -1,22 +1,19 @@
 //
 //  SensorDataParser.m
-//  GreenSmile
 //
-//  Created by 金田 祐也 on 6/13/12.
-//  Copyright (c) 2012 会津大学. All rights reserved.
+//
+//  Created by Yongping on 1/19/14.
+//  Copyright (c) 2014 Eyes, JAPAN. All rights reserved.
 //
 
 #import "SensorDataParser.h"
 
+@interface SensorDataParser()
+
+@end
+
 @implementation SensorDataParser
 
-
-- (SensorData*)parseData:(NSData*)data {
-    
-    
-    SensorData *sensor = [[SensorData alloc] initForDemo];
-    return sensor;
-}
 
 /* From sensor there are 2 type of messages: one type is begined with BNRDD, another type is begined with BNXSTS. 
  BNRDD has radiation data, and BNXSTS has temperature, humidity, CO and NOX data
@@ -56,42 +53,130 @@ $BNXSTS,0210,23,45,12,0.304
  NOX: range from 0.05 ~ 5, unit is ppm
  */
 
-- (SensorData*)parseDataByString:(NSString*)rawString
+- (NSDictionary*)parseDataByString:(NSString*)rawString
+{
+    NSArray *stringArray = [rawString componentsSeparatedByString:@"$BNXSTS"];
+    if (stringArray.count > 1) {
+        NSString *bnrddString =     [stringArray objectAtIndex:0];
+        NSString *bnxstsString =    [stringArray objectAtIndex:1];
+        NSDictionary *bnrddDict = [self parseBNRDDString:bnrddString];
+        NSDictionary *bnxstsDict = [self parseBNXSTSString:bnxstsString];
+        
+        NSArray *dataTypeArray1 =   [bnrddDict objectForKey:@"dataTypes"];
+        NSArray *dataValueArray1 =  [bnrddDict objectForKey:@"dataValues"];
+        NSArray *dataUnitArray1 =   [bnrddDict objectForKey:@"dataUnits"];
+
+        NSArray *dataTypeArray2 =   [bnxstsDict objectForKey:@"dataTypes"];
+        NSArray *dataValueArray2 =  [bnxstsDict objectForKey:@"dataValues"];
+        NSArray *dataUnitArray2 =   [bnxstsDict objectForKey:@"dataUnits"];
+        
+        NSMutableArray *dataTypeArray = [[NSMutableArray alloc] initWithArray:dataTypeArray1];
+        [dataTypeArray addObjectsFromArray:dataTypeArray2];
+
+        NSMutableArray *dataValueArray = [[NSMutableArray alloc] initWithArray:dataValueArray1];
+        [dataValueArray addObjectsFromArray:dataValueArray2];
+        
+        NSMutableArray *dataUnitArray = [[NSMutableArray alloc] initWithArray:dataUnitArray1];
+        [dataUnitArray addObjectsFromArray:dataUnitArray2];
+        
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:bnrddDict];
+        [dict setObject:dataTypeArray forKey:@"dataTypes"];
+        [dict setObject:dataValueArray forKey:@"dataValues"];
+        [dict setObject:dataUnitArray forKey:@"dataUnits"];
+        
+        return dict;
+        
+    }else{
+        if ([rawString hasPrefix:@"$BNRDD"]) {
+            return [self parseBNRDDString:rawString];
+        }else if([rawString hasPrefix:@"$BNXSTS"]){
+            return [self parseBNXSTSString:rawString];
+        }
+    }
+    return nil;
+}
+
+-(NSDictionary *)parseBNRDDString:(NSString *)rawString
 {
     NSArray *dataArray = [rawString componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];
-//    SensorData *sensor = [[[SensorData alloc] initForDemo] retain];
-    if (dataArray.count != 20) {
+    if (dataArray.count != 15) {
         return nil;
     }
     
-    SensorData *data = [[SensorData alloc] init];
-    NSString *radiationValueString =    [dataArray objectAtIndex:3];
-
+    NSString *radiationCPMString =    [dataArray objectAtIndex:3];
+    float radiationuSvhValue =  [radiationCPMString floatValue]/344.00;
+    NSString *radiationuSvhString = [NSString stringWithFormat:@"%4.3f",radiationuSvhValue];
     
-
-    NSDate *receivedDate = [self dateFromUTCString:[dataArray objectAtIndex:2]];
-    NSString *temperatureValueString= [dataArray objectAtIndex:16];
-    NSString *humilityValueString   = [dataArray objectAtIndex:17];
-    NSString *COValueString         = [dataArray objectAtIndex:18];
-    NSString *NOXValueString        = [dataArray objectAtIndex:19];
     NSString *latitudeString        = [dataArray objectAtIndex:7];
     NSString *longitudeString       = [dataArray objectAtIndex:9];
     
-    [data setNowDate:       receivedDate];
-    [data setRadiation:     [radiationValueString floatValue]/344.00];
-    [data setDeviceID:      [dataArray objectAtIndex:1]];
-    [data setCapturedDate:  [dataArray objectAtIndex:2]];
-
-    [data setHumidity:      [humilityValueString            floatValue]];
-    [data setTemperature:   [temperatureValueString         floatValue]];
-    [data setCO:            [self adjustCO:[COValueString   floatValue]]];
-    [data setNOX:           [self adjustNOX:[NOXValueString floatValue]]];
+    NSString *unit = @"uSv/h";
+    NSString *dataType = @"Radiation";
+    return @{@"dataTypes":@[dataType], @"dataValues":@[radiationuSvhString], @"dataUnits":@[unit], @"latitude":latitudeString, @"longitude":longitudeString};
     
-    [data setLatitude:      [self adjustToDecimalLatitude:latitudeString]];
-    [data setLongitude:     [self adjustToDecimalLongitude:longitudeString]];
-    
-    return data;
 }
+-(NSDictionary *)parseBNXSTSString:(NSString *)rawString
+{
+    NSArray *dataArray = [rawString componentsSeparatedByCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@","]];
+    if (dataArray.count != 6) {
+        return nil;
+    }
+    
+    NSString *temperatureValueString= [dataArray objectAtIndex:2];
+    NSString *humilityValueString   = [dataArray objectAtIndex:3];
+    NSString *COValueString         = [dataArray objectAtIndex:4];
+    NSString *NOXValueString        = [dataArray objectAtIndex:5];
+    
+    float coValue   = [self adjustCO:[COValueString   floatValue]];
+    float noxValue  = [self adjustNOX:[NOXValueString floatValue]];
+
+    NSString *coPPMString = [NSString stringWithFormat:@"%4.3f",coValue];
+    NSString *noxPPMString = [NSString stringWithFormat:@"%4.3f",noxValue];
+
+    NSArray *dataTypesArray = @[@"Tempreature", @"Humility", @"CO", @"NOX"];
+    NSArray *valueArray = @[temperatureValueString, humilityValueString, coPPMString, noxPPMString];
+    NSArray *unitArray = @[@"C", @"%",@"PPM", @"PPM"];
+    
+    return @{@"dataTypes":dataTypesArray, @"dataValues":valueArray, @"dataUnits":unitArray};
+}
+
+-(SensorData *)sensorDataFromDict: (NSDictionary *)dict
+{
+    SensorData *sensorData = [[SensorData alloc] init];
+    
+    if (!([dict objectForKey:@"dataTypes"] && [dict objectForKey:@"dataValues"] && [dict objectForKey:@"latitude"] && [dict objectForKey:@"longitude"])) {
+        return nil;
+    }
+    
+    NSArray *dataTypeArray =   [dict objectForKey:@"dataTypes"];
+    NSArray *dataValueArray =  [dict objectForKey:@"dataValues"];
+    
+    for (int i= 0; i < dataTypeArray.count; i++) {
+        NSString *dataType = [dataTypeArray objectAtIndex:i];
+        NSString *dataValue = [dataValueArray objectAtIndex:i];
+        
+        if ([dataType isEqualToString:@"Radiation"]) {
+            sensorData.radiation = [dataValue floatValue];
+        }else if([dataType isEqualToString:@"Tempreature"]) {
+            sensorData.temperature = [dataValue floatValue];
+        }else if([dataType isEqualToString:@"Humility"]) {
+            sensorData.humidity = [dataValue floatValue];
+        }else if([dataType isEqualToString:@"CO"]) {
+            sensorData.CO = [dataValue floatValue];
+        }else if([dataType isEqualToString:@"NOX"]) {
+            sensorData.NOX = [dataValue floatValue];
+        }
+    
+    }
+    
+    sensorData.latitude = [[dict objectForKey:@"latitude"] floatValue];
+    sensorData.longitude = [[dict objectForKey:@"longitude"] floatValue];
+    
+    return sensorData;
+    
+}
+
+
 
 /** Adust CO data by the formula: y = x * 0.06434171 - 0.5958041554, x is the raw data, y is the result data
  @param rawCO float: raw data of CO

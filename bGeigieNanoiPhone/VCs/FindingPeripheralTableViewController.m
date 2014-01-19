@@ -1,21 +1,20 @@
 //
-//  SettingsViewController.m
+//  FindingPeripheralTableViewController.m
 //  bGeigieNanoiPhone
 //
-//  Created by Chen Yongping on 1/13/14.
+//  Created by Chen Yongping on 1/7/14.
 //  Copyright (c) 2014 Eyes, JAPAN. All rights reserved.
 //
 
-#import "SettingsViewController.h"
+#import "FindingPeripheralTableViewController.h"
+#import "NotificationSharedHeader.h"
 
-@interface SettingsViewController () <UITextFieldDelegate>
-@property (weak, nonatomic) IBOutlet UITextField *apiKeyTextfield;
-@property (weak, nonatomic) IBOutlet UITextField *deviceIDTextfield;
-- (IBAction)pushRob:(id)sender;
+@interface FindingPeripheralTableViewController ()
+
 
 @end
 
-@implementation SettingsViewController
+@implementation FindingPeripheralTableViewController
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -29,20 +28,26 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (!_peripheralNameArray) {
+        _peripheralNameArray = [[NSMutableArray alloc] init];
+    }
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(foundPeripheral:) name:BLE_CENTRAL_FOUND_PERIPHERAL object:nil];
 
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    if ([ud valueForKey:@"deviceID"]) {
-        _deviceIDTextfield.text = [ud valueForKey:@"deviceID"];
-    }
-    
-    if ([ud valueForKey:@"apiKey"]) {
-        _apiKeyTextfield.text = [ud valueForKey:@"apiKey"];
-    }
+}
+
+
+
+-(void)addPeripheralName:(NSString *)foundPeripheralName
+{
+    [_peripheralNameArray addObject:foundPeripheralName];
+    [self.tableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning
@@ -52,32 +57,47 @@
 }
 
 #pragma mark - Table view data source
-/*
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-#warning Potentially incomplete method implementation.
     // Return the number of sections.
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-#warning Incomplete method implementation.
     // Return the number of rows in the section.
-    return 0;
+    return _peripheralNameArray.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
+    static NSString *CellIdentifier = @"peripheralCell";
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier forIndexPath:indexPath];
     
     // Configure the cell...
+
+    cell.textLabel.text = [_peripheralNameArray objectAtIndex:indexPath.row];
+
     
     return cell;
 }
-*/
 
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString *selectedPeripheralName = [_peripheralNameArray objectAtIndex:indexPath.row];
+    [[NSNotificationCenter defaultCenter] postNotificationName:BLE_SELECT_A_PERIPHERAL_TO_CONNECT object:self userInfo:@{@"peripheralName":selectedPeripheralName}];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark -BLE notification handling method
+-(void)foundPeripheral:(NSNotification *) notification
+{
+    NSString *periphralName = [notification.userInfo objectForKey:@"peripheralName"];
+    if (periphralName) {
+        [self addPeripheralName:periphralName];
+    }
+}
 
 /*
 // Override to support conditional editing of the table view.
@@ -130,22 +150,4 @@
 
  */
 
--(void)textFieldDidEndEditing:(UITextField *)textField
-{
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
-    if (textField == _apiKeyTextfield) {
-        [ud setObject:_apiKeyTextfield.text forKey:@"apiKey"];
-        
-    }else if(textField == _deviceIDTextfield){
-        [ud setObject:_deviceIDTextfield.text forKey:@"deviceID"];
-    }
-}
-
-- (IBAction)pushRob:(id)sender {
-    
-    _apiKeyTextfield.text = @"q1LKu7RQ8s5pmyxunnDW";
-    _deviceIDTextfield.text = @"44";
-    [self textFieldDidEndEditing:_apiKeyTextfield];
-    [self textFieldDidEndEditing:_deviceIDTextfield];
-}
 @end
