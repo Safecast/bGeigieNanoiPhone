@@ -11,6 +11,7 @@
 #import "AppDelegate.h"
 #import "FindingPeripheralTableViewController.h"
 #import "NotificationSharedHeader.h"
+#import "SensorDataParser.h"
 
 @interface MainViewController ()<UIPageViewControllerDataSource>
 
@@ -18,6 +19,8 @@
 @property(nonatomic, strong) NSArray                *dataTypes;
 @property(nonatomic, strong) NSArray                *dataValues;
 @property(nonatomic, strong) NSArray                *dataUnits;
+
+@property(nonatomic, assign) NSInteger              currentIndex;
 
 @property(nonatomic, assign) BOOL                   isBLEConnected;
 
@@ -48,10 +51,12 @@
     //regiester to be observer of BLE notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectedToPeripheral:) name:BLE_PERIPHERIAL_CONNECTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnectedWithPeripheral:) name:BLE_PERIPHERIAL_DISCONNECTED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedSensorData:) name:BLE_CENTRAL_RECEIVED_DATA object:nil];
 
-    _dataTypes = @[@"Radiation", @"Humility"];
-    _dataValues = @[@"0.111", @"20"];
-    _dataUnits  = @[@"uSv/h", @"%"];
+
+    _dataTypes = @[@"Radiation"];
+    _dataValues = @[@"0.000"];
+    _dataUnits  = @[@"uSv/h"];
     
     //init page view controller
     // Create page view controller
@@ -90,7 +95,7 @@
     if (index == NSNotFound) {
         return nil;
     }
-    
+    _currentIndex = index;
     index++;
     if (index == [self.dataTypes count]) {
         return nil;
@@ -169,5 +174,23 @@
     [_bleConnectionButton setTitle:@"Connect" forState:UIControlStateNormal];
     _isBLEConnected = FALSE;
 }
+-(void)receivedSensorData:(NSNotification *) notification
+{
+    NSString *sensorRawData = [notification.userInfo objectForKey:@"rawData"];
+    SensorDataParser *parser = [[SensorDataParser alloc] init];
+    NSDictionary *parsedResult = [parser parseDataByString:sensorRawData];
+
+    if (parsedResult) {
+        NSArray *dataTypesArray = [parsedResult objectForKey:@"dataTypes"];
+        NSArray *valueArray = [parsedResult objectForKey:@"dataValues"];
+        NSArray *unitArray  = [parsedResult objectForKey:@"dataUnits"];
+        _dataTypes = dataTypesArray;
+        _dataValues = valueArray;
+        _dataUnits = unitArray;
+
+    }
+    
+}
+
 
 @end

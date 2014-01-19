@@ -15,8 +15,7 @@
 
 @interface SensorDataParser : NSObject
 
-- (SensorData*)parseData:(NSData*)data;
-- (SensorData*)parseDataByString:(NSString*)rawString;
+- (NSDictionary*)parseDataByString:(NSString*)rawString;
 
 - (NSString*)dateStringOfUTC: (NSDate *)date;
 - (NSString*)dateStringOfJST: (NSDate *)date;

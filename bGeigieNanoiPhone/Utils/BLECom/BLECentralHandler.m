@@ -239,21 +239,18 @@
         return;
     }
     NSString *stringFromData = [[NSString alloc] initWithData:characteristic.value encoding:NSUTF8StringEncoding];
-    if ([stringFromData hasPrefix:@"$"] && _dataRecord.length > 90) {//has the head of sensor data
+    if ([stringFromData hasPrefix:@"$"] && _dataRecord.length > 0 ) {//has the head of sensor data
     
-        if (stringFromData && ![stringFromData isEqualToString:@""]) {
-            SensorDataParser *parser = [[SensorDataParser alloc] init];
-            SensorData *sensorData = [parser parseDataByString:_dataRecord];
-            NSLog(@"sensorData:%f,%f,%f,%f,%f,%f",sensorData.CO, sensorData.NOX,sensorData.temperature, sensorData.humidity,sensorData.latitude,sensorData.longitude);
+        if (_dataRecord && ![_dataRecord isEqualToString:@""]) {
             [[NSNotificationCenter defaultCenter] postNotificationName:BLE_CENTRAL_RECEIVED_DATA
                                                                 object:self
-                                                              userInfo:[sensorData getDictionary]];
+                                                              userInfo:@{@"rawData": _dataRecord}];
 
         }
         _dataRecord = @"";
         
     }
-    
+    NSLog(@"received data:%@",_dataRecord);
     if (stringFromData) {
         _dataRecord = [[NSString alloc] initWithString:[_dataRecord stringByAppendingString:stringFromData]];
     }
