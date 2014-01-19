@@ -10,8 +10,9 @@
 
 @interface SingleMeterViewController : UIViewController
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *valueLabel;
-@property (weak, nonatomic) IBOutlet UILabel *unitLabel;
+@property(nonatomic, assign) NSInteger pageIndex;
+@property(nonatomic, retain) NSString *dataType;
+@property(nonatomic, retain) NSString *dataValue;
+@property(nonatomic, retain) NSString *dataUnit;
 
 @end

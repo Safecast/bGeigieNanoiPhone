@@ -9,7 +9,9 @@
 #import "SingleMeterViewController.h"
 
 @interface SingleMeterViewController ()
-
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *valueLabel;
+@property (weak, nonatomic) IBOutlet UILabel *unitLabel;
 @end
 
 @implementation SingleMeterViewController
@@ -34,5 +36,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+-(void)viewWillAppear:(BOOL)animated
+{
+    _titleLabel.text = _dataType;
+    _valueLabel.text = _dataValue;
+    _unitLabel.text = _dataUnit;
+}
+
 
 @end
