@@ -2,8 +2,8 @@
 //  SensorDataParser.h
 //  GreenSmile
 //
-//  Created by 金田 祐也 on 6/13/12.
-//  Copyright (c) 2012 会津大学. All rights reserved.
+//  Created by Chen Yongping on 1/13/14.
+//  Copyright (c) 2014 Eyes, JAPAN. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>

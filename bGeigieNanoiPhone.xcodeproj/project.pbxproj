@@ -15,7 +15,6 @@
 		BE3816CD187BC3C60005C7DE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816CC187BC3C60005C7DE /* main.m */; };
 		BE3816D1187BC3C60005C7DE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816D0187BC3C60005C7DE /* AppDelegate.m */; };
 		BE3816D4187BC3C60005C7DE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BE3816D2187BC3C60005C7DE /* Main.storyboard */; };
-		BE3816D7187BC3C60005C7DE /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816D6187BC3C60005C7DE /* ViewController.m */; };
 		BE3816D9187BC3C60005C7DE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BE3816D8187BC3C60005C7DE /* Images.xcassets */; };
 		BE3816E0187BC3C60005C7DE /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3816DF187BC3C60005C7DE /* XCTest.framework */; };
 		BE3816E1187BC3C60005C7DE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3816C0187BC3C60005C7DE /* Foundation.framework */; };
@@ -23,11 +22,18 @@
 		BE3816EA187BC3C60005C7DE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = BE3816E8187BC3C60005C7DE /* InfoPlist.strings */; };
 		BE3816EC187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816EB187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m */; };
 		BE3816F6187BC90A0005C7DE /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3816F5187BC90A0005C7DE /* CoreBluetooth.framework */; };
-		BE3816FD187BF35C0005C7DE /* FindingPeripheralTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816FC187BF35C0005C7DE /* FindingPeripheralTableViewController.m */; };
-		BE9CC199187E365B00401717 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816D6187BC3C60005C7DE /* ViewController.m */; };
+		BE5EEC54188B6D97008DF771 /* FindingPeripheralTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC4B188B6D97008DF771 /* FindingPeripheralTableViewController.m */; };
+		BE5EEC55188B6D97008DF771 /* FindingPeripheralTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC4B188B6D97008DF771 /* FindingPeripheralTableViewController.m */; };
+		BE5EEC58188B6D97008DF771 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC4F188B6D97008DF771 /* SettingsViewController.m */; };
+		BE5EEC59188B6D97008DF771 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC4F188B6D97008DF771 /* SettingsViewController.m */; };
+		BE5EEC5A188B6D97008DF771 /* SingleMeterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC51188B6D97008DF771 /* SingleMeterViewController.m */; };
+		BE5EEC5B188B6D97008DF771 /* SingleMeterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC51188B6D97008DF771 /* SingleMeterViewController.m */; };
+		BE5EEC5C188B6D97008DF771 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC53188B6D97008DF771 /* ViewController.m */; };
+		BE5EEC5D188B6D97008DF771 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC53188B6D97008DF771 /* ViewController.m */; };
+		BE5EEC60188B7D52008DF771 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC5F188B7D52008DF771 /* MainViewController.m */; };
+		BE5EEC61188B7D52008DF771 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC5F188B7D52008DF771 /* MainViewController.m */; };
 		BE9CC19A187E365B00401717 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816D0187BC3C60005C7DE /* AppDelegate.m */; };
 		BE9CC19B187E365B00401717 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816CC187BC3C60005C7DE /* main.m */; };
-		BE9CC19C187E365B00401717 /* FindingPeripheralTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816FC187BF35C0005C7DE /* FindingPeripheralTableViewController.m */; };
 		BE9CC19E187E365B00401717 /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3816F5187BC90A0005C7DE /* CoreBluetooth.framework */; };
 		BE9CC19F187E365B00401717 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3816C2187BC3C60005C7DE /* CoreGraphics.framework */; };
 		BE9CC1A0187E365B00401717 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BE3816C4187BC3C60005C7DE /* UIKit.framework */; };
@@ -41,9 +47,6 @@
 		BEDD7802187FE5D20089B779 /* SensorData.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDD7801187FE5D20089B779 /* SensorData.m */; };
 		BEDD7803187FE5D20089B779 /* SensorData.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDD7801187FE5D20089B779 /* SensorData.m */; };
 		BEDD7804187FE5D20089B779 /* SensorData.m in Sources */ = {isa = PBXBuildFile; fileRef = BEDD7801187FE5D20089B779 /* SensorData.m */; };
-		BEEA0AEA1883DB19001F2090 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEA0AE91883DB19001F2090 /* SettingsViewController.m */; };
-		BEEA0AEB1883DB19001F2090 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEA0AE91883DB19001F2090 /* SettingsViewController.m */; };
-		BEEA0AEC1883DB19001F2090 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BEEA0AE91883DB19001F2090 /* SettingsViewController.m */; };
 		CE5B0AB5187E5534002B16DF /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CE5B0AB4187E5534002B16DF /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -71,8 +74,6 @@
 		BE3816CF187BC3C60005C7DE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		BE3816D0187BC3C60005C7DE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		BE3816D3187BC3C60005C7DE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		BE3816D5187BC3C60005C7DE /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		BE3816D6187BC3C60005C7DE /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		BE3816D8187BC3C60005C7DE /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BE3816DE187BC3C60005C7DE /* bGeigieNanoiPhoneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = bGeigieNanoiPhoneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE3816DF187BC3C60005C7DE /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -80,16 +81,22 @@
 		BE3816E9187BC3C60005C7DE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		BE3816EB187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = bGeigieNanoiPhoneTests.m; sourceTree = "<group>"; };
 		BE3816F5187BC90A0005C7DE /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = System/Library/Frameworks/CoreBluetooth.framework; sourceTree = SDKROOT; };
-		BE3816FB187BF35C0005C7DE /* FindingPeripheralTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindingPeripheralTableViewController.h; sourceTree = "<group>"; };
-		BE3816FC187BF35C0005C7DE /* FindingPeripheralTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindingPeripheralTableViewController.m; sourceTree = "<group>"; };
+		BE5EEC4A188B6D97008DF771 /* FindingPeripheralTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FindingPeripheralTableViewController.h; sourceTree = "<group>"; };
+		BE5EEC4B188B6D97008DF771 /* FindingPeripheralTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FindingPeripheralTableViewController.m; sourceTree = "<group>"; };
+		BE5EEC4E188B6D97008DF771 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
+		BE5EEC4F188B6D97008DF771 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
+		BE5EEC50188B6D97008DF771 /* SingleMeterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleMeterViewController.h; sourceTree = "<group>"; };
+		BE5EEC51188B6D97008DF771 /* SingleMeterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleMeterViewController.m; sourceTree = "<group>"; };
+		BE5EEC52188B6D97008DF771 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		BE5EEC53188B6D97008DF771 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		BE5EEC5E188B7D52008DF771 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
+		BE5EEC5F188B7D52008DF771 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		BE9CC1A9187E365B00401717 /* bGeigieNanoiPhoneEnterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bGeigieNanoiPhoneEnterprise.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BE9CC1AA187E365C00401717 /* bGeigieNanoiPhone Enterprise-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "bGeigieNanoiPhone Enterprise-Info.plist"; sourceTree = "<group>"; };
 		BEDD77F1187FE5700089B779 /* SensorDataParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorDataParser.h; sourceTree = "<group>"; };
 		BEDD77F2187FE5700089B779 /* SensorDataParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorDataParser.m; sourceTree = "<group>"; };
 		BEDD7800187FE5D20089B779 /* SensorData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SensorData.h; sourceTree = "<group>"; };
 		BEDD7801187FE5D20089B779 /* SensorData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SensorData.m; sourceTree = "<group>"; };
-		BEEA0AE81883DB19001F2090 /* SettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingsViewController.h; sourceTree = "<group>"; };
-		BEEA0AE91883DB19001F2090 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		CE5B0AB4187E5534002B16DF /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -169,19 +176,14 @@
 		BE3816C6187BC3C60005C7DE /* bGeigieNanoiPhone */ = {
 			isa = PBXGroup;
 			children = (
+				BE5EEC49188B6D97008DF771 /* VCs */,
 				BEDD77FF187FE5D20089B779 /* Models */,
 				BEDD77ED187FE3960089B779 /* Utils */,
 				BE3816CF187BC3C60005C7DE /* AppDelegate.h */,
 				BE3816D0187BC3C60005C7DE /* AppDelegate.m */,
 				BE3816D2187BC3C60005C7DE /* Main.storyboard */,
-				BE3816D5187BC3C60005C7DE /* ViewController.h */,
-				BE3816D6187BC3C60005C7DE /* ViewController.m */,
 				BE3816D8187BC3C60005C7DE /* Images.xcassets */,
 				BE3816C7187BC3C60005C7DE /* Supporting Files */,
-				BE3816FB187BF35C0005C7DE /* FindingPeripheralTableViewController.h */,
-				BE3816FC187BF35C0005C7DE /* FindingPeripheralTableViewController.m */,
-				BEEA0AE81883DB19001F2090 /* SettingsViewController.h */,
-				BEEA0AE91883DB19001F2090 /* SettingsViewController.m */,
 			);
 			path = bGeigieNanoiPhone;
 			sourceTree = "<group>";
@@ -214,6 +216,23 @@
 				BE3816E8187BC3C60005C7DE /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BE5EEC49188B6D97008DF771 /* VCs */ = {
+			isa = PBXGroup;
+			children = (
+				BE5EEC4A188B6D97008DF771 /* FindingPeripheralTableViewController.h */,
+				BE5EEC4B188B6D97008DF771 /* FindingPeripheralTableViewController.m */,
+				BE5EEC4E188B6D97008DF771 /* SettingsViewController.h */,
+				BE5EEC4F188B6D97008DF771 /* SettingsViewController.m */,
+				BE5EEC50188B6D97008DF771 /* SingleMeterViewController.h */,
+				BE5EEC51188B6D97008DF771 /* SingleMeterViewController.m */,
+				BE5EEC52188B6D97008DF771 /* ViewController.h */,
+				BE5EEC53188B6D97008DF771 /* ViewController.m */,
+				BE5EEC5E188B7D52008DF771 /* MainViewController.h */,
+				BE5EEC5F188B7D52008DF771 /* MainViewController.m */,
+			);
+			path = VCs;
 			sourceTree = "<group>";
 		};
 		BEDD77ED187FE3960089B779 /* Utils */ = {
@@ -418,13 +437,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE5EEC5C188B6D97008DF771 /* ViewController.m in Sources */,
 				BEDD7802187FE5D20089B779 /* SensorData.m in Sources */,
-				BE3816D7187BC3C60005C7DE /* ViewController.m in Sources */,
 				BEDD77F6187FE5700089B779 /* SensorDataParser.m in Sources */,
+				BE5EEC54188B6D97008DF771 /* FindingPeripheralTableViewController.m in Sources */,
+				BE5EEC60188B7D52008DF771 /* MainViewController.m in Sources */,
+				BE5EEC5A188B6D97008DF771 /* SingleMeterViewController.m in Sources */,
 				BE3816D1187BC3C60005C7DE /* AppDelegate.m in Sources */,
 				BE3816CD187BC3C60005C7DE /* main.m in Sources */,
-				BE3816FD187BF35C0005C7DE /* FindingPeripheralTableViewController.m in Sources */,
-				BEEA0AEA1883DB19001F2090 /* SettingsViewController.m in Sources */,
+				BE5EEC58188B6D97008DF771 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,7 +456,6 @@
 				BEDD77F8187FE5700089B779 /* SensorDataParser.m in Sources */,
 				BE3816EC187BC3C60005C7DE /* bGeigieNanoiPhoneTests.m in Sources */,
 				BEDD7804187FE5D20089B779 /* SensorData.m in Sources */,
-				BEEA0AEC1883DB19001F2090 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -443,13 +463,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BE5EEC5D188B6D97008DF771 /* ViewController.m in Sources */,
 				BEDD7803187FE5D20089B779 /* SensorData.m in Sources */,
-				BE9CC199187E365B00401717 /* ViewController.m in Sources */,
 				BEDD77F7187FE5700089B779 /* SensorDataParser.m in Sources */,
+				BE5EEC55188B6D97008DF771 /* FindingPeripheralTableViewController.m in Sources */,
+				BE5EEC61188B7D52008DF771 /* MainViewController.m in Sources */,
+				BE5EEC5B188B6D97008DF771 /* SingleMeterViewController.m in Sources */,
 				BE9CC19A187E365B00401717 /* AppDelegate.m in Sources */,
 				BE9CC19B187E365B00401717 /* main.m in Sources */,
-				BE9CC19C187E365B00401717 /* FindingPeripheralTableViewController.m in Sources */,
-				BEEA0AEB1883DB19001F2090 /* SettingsViewController.m in Sources */,
+				BE5EEC59188B6D97008DF771 /* SettingsViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
