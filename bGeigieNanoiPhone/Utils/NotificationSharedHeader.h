@@ -13,5 +13,8 @@
 #define BLE_CENTRAL_FOUND_PERIPHERAL        @"BLECentralFoundPeripheral"
 #define BLE_SELECT_A_PERIPHERAL_TO_CONNECT  @"BLESelectAPeripheralToConnect"
 #define BLE_CENTRAL_RECEIVED_DATA           @"BLECentralReceivedData"
+#define BLE_PERIPHERIAL_CONNECTED           @"BLEPeripheralConnected"
+#define BLE_PERIPHERIAL_DISCONNECTED        @"BLEPeripheralDisconnected"
+
 
 #endif

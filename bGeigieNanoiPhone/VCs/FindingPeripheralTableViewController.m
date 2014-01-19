@@ -7,6 +7,7 @@
 //
 
 #import "FindingPeripheralTableViewController.h"
+#import "NotificationSharedHeader.h"
 
 @interface FindingPeripheralTableViewController ()
 
@@ -32,12 +33,16 @@
         _peripheralNameArray = [[NSMutableArray alloc] init];
     }
 
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(foundPeripheral:) name:BLE_CENTRAL_FOUND_PERIPHERAL object:nil];
+
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
  
     // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
     // self.navigationItem.rightBarButtonItem = self.editButtonItem;
 }
+
+
 
 -(void)addPeripheralName:(NSString *)foundPeripheralName
 {
@@ -80,8 +85,18 @@
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [_delegate selectPeripheralByIndex:indexPath.row];
+    NSString *selectedPeripheralName = [_peripheralNameArray objectAtIndex:indexPath.row];
+    [[NSNotificationCenter defaultCenter] postNotificationName:BLE_SELECT_A_PERIPHERAL_TO_CONNECT object:self userInfo:@{@"peripheralName":selectedPeripheralName}];
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+#pragma mark -BLE notification handling method
+-(void)foundPeripheral:(NSNotification *) notification
+{
+    NSString *periphralName = [notification.userInfo objectForKey:@"peripheralName"];
+    if (periphralName) {
+        [self addPeripheralName:periphralName];
+    }
 }
 
 /*

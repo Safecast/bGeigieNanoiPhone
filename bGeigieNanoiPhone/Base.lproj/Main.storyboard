@@ -244,7 +244,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GZj-WK-qv0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1306" y="-195"/>
+            <point key="canvasLocation" x="1454" y="541"/>
         </scene>
         <!--Finding Peripheral Table View Controller-->
         <scene sceneID="OS6-qJ-aSJ">
@@ -273,7 +273,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Fbz-uS-2He" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1694" y="420"/>
+            <point key="canvasLocation" x="1454" y="1299"/>
         </scene>
         <!--Page View Controller-->
         <scene sceneID="Ei3-6C-qW5">
@@ -281,7 +281,7 @@
                 <pageViewController storyboardIdentifier="MetersPageViewController" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="zm4-ep-A1d" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ljb-zr-edO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1526" y="1139"/>
+            <point key="canvasLocation" x="1454" y="2003"/>
         </scene>
         <!--Single Meter View Controller-->
         <scene sceneID="N5Z-rc-7be">
@@ -349,7 +349,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dIR-CD-iLB" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1921" y="1139"/>
+            <point key="canvasLocation" x="1849" y="2003"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="tN2-6I-feu">
@@ -380,15 +380,43 @@
                     <view key="view" contentMode="scaleToFill" id="Rfa-z4-ZzJ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uY6-Zp-O58">
+                                <rect key="frame" x="16" y="7" width="87" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Start Upload">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="NZm-5J-ZzW">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="HWl-RE-M8L"/>
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="JAB-BH-xU6">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ej9-pg-aX0">
+                                <rect key="frame" x="16" y="7" width="84" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Connect">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="pushBLEConnectionButton:" destination="KUR-dp-auj" eventType="touchUpInside" id="Nha-Cj-YVP"/>
+                                </connections>
+                            </button>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Settings" id="HWl-RE-M8L">
+                            <connections>
+                                <segue destination="w7w-df-cay" kind="push" id="UNh-2b-g0y"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="bleConnectionButton" destination="Ej9-pg-aX0" id="CA8-tQ-cTt"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R0b-pt-C1R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1125" y="1139"/>
+            <point key="canvasLocation" x="781" y="1287"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="E3t-Ry-5cf">
@@ -406,7 +434,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ba7-Mf-Ybt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="599" y="1139"/>
+            <point key="canvasLocation" x="267" y="1299"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -414,4 +442,7 @@
         <simulatedOrientationMetrics key="orientation"/>
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
+    <inferredMetricsTieBreakers>
+        <segue reference="UNh-2b-g0y"/>
+    </inferredMetricsTieBreakers>
 </document>

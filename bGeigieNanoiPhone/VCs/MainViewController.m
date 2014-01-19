@@ -8,6 +8,9 @@
 
 #import "MainViewController.h"
 #import "SingleMeterViewController.h"
+#import "AppDelegate.h"
+#import "FindingPeripheralTableViewController.h"
+#import "NotificationSharedHeader.h"
 
 @interface MainViewController ()<UIPageViewControllerDataSource>
 
@@ -15,6 +18,13 @@
 @property(nonatomic, strong) NSArray                *dataTypes;
 @property(nonatomic, strong) NSArray                *dataValues;
 @property(nonatomic, strong) NSArray                *dataUnits;
+
+@property(nonatomic, assign) BOOL                   isBLEConnected;
+
+@property (weak, nonatomic) IBOutlet UIButton *bleConnectionButton;
+
+
+- (IBAction)pushBLEConnectionButton:(id)sender;
 @end
 
 @implementation MainViewController
@@ -31,6 +41,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    //init
+    _isBLEConnected = FALSE;
+    
+    //regiester to be observer of BLE notifications
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectedToPeripheral:) name:BLE_PERIPHERIAL_CONNECTED object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnectedWithPeripheral:) name:BLE_PERIPHERIAL_DISCONNECTED object:nil];
+
     _dataTypes = @[@"Radiation", @"Humility"];
     _dataValues = @[@"0.111", @"20"];
     _dataUnits  = @[@"uSv/h", @"%"];
@@ -117,6 +135,39 @@
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
     return 0;
+}
+
+- (IBAction)pushBLEConnectionButton:(id)sender {
+    
+    if (!_isBLEConnected) {
+        [ApplicationDelegate.bleCentralHandler start];
+        
+        UIStoryboard *managementStoryboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        FindingPeripheralTableViewController *findingPeripheralVC = [managementStoryboard instantiateViewControllerWithIdentifier:@"FindingPeripheralTableViewController"];
+        [self.navigationController pushViewController:findingPeripheralVC animated:YES];
+
+    }else{
+        [ApplicationDelegate.bleCentralHandler stop];
+        [_bleConnectionButton setTitle:@"Connect" forState:UIControlStateNormal];
+        _isBLEConnected = FALSE;
+
+    }
+    
+}
+
+#pragma mark -BLE notification handling methods
+-(void)connectedToPeripheral:(NSNotification *) notification
+{
+    
+    [_bleConnectionButton setTitle:@"Disconnect" forState:UIControlStateNormal];
+    _isBLEConnected = TRUE;
+}
+
+-(void)disconnectedWithPeripheral:(NSNotification *) notification
+{
+    [ApplicationDelegate.bleCentralHandler stop];
+    [_bleConnectionButton setTitle:@"Connect" forState:UIControlStateNormal];
+    _isBLEConnected = FALSE;
 }
 
 @end

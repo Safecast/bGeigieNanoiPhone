@@ -130,8 +130,10 @@
 - (void)centralManager:(CBCentralManager *)central didConnectPeripheral:(CBPeripheral *)peripheral
 {
     NSLog(@"Central node Peripheral Connected");
-    
-    
+    //sent out notification
+    [[NSNotificationCenter defaultCenter] postNotificationName:BLE_PERIPHERIAL_CONNECTED
+                                                        object:self
+                                                      userInfo:nil];
     // Make sure we get the discovery callbacks
     peripheral.delegate = self;
     
