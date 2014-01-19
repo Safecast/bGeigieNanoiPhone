@@ -109,10 +109,11 @@ $BNXSTS,0210,23,45,12,0.304
     
     NSString *latitudeString        = [dataArray objectAtIndex:7];
     NSString *longitudeString       = [dataArray objectAtIndex:9];
+    NSDate *receivedDate =            [dataArray objectAtIndex:2];
     
     NSString *unit = @"uSv/h";
     NSString *dataType = @"Radiation";
-    return @{@"dataTypes":@[dataType], @"dataValues":@[radiationuSvhString], @"dataUnits":@[unit], @"latitude":latitudeString, @"longitude":longitudeString};
+    return @{@"dataTypes":@[dataType], @"dataValues":@[radiationuSvhString], @"dataUnits":@[unit], @"latitude":latitudeString, @"longitude":longitudeString, @"receivedDate":receivedDate};
     
 }
 -(NSDictionary *)parseBNXSTSString:(NSString *)rawString
@@ -171,6 +172,7 @@ $BNXSTS,0210,23,45,12,0.304
     
     sensorData.latitude = [[dict objectForKey:@"latitude"] floatValue];
     sensorData.longitude = [[dict objectForKey:@"longitude"] floatValue];
+    sensorData.capturedDate = [dict objectForKey:@"receivedDate"];
     
     return sensorData;
     

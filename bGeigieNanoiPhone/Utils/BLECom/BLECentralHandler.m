@@ -122,6 +122,7 @@
     
     NSLog(@"Central node Failed to connect to %@. (%@)", peripheral, error);
     
+    
 }
 
 
@@ -143,13 +144,18 @@
 
 -(void)centralManager:(CBCentralManager *)central didDisconnectPeripheral:(CBPeripheral *)peripheral error:(NSError *)error
 {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:BLE_PERIPHERIAL_DISCONNECTED
+                                                        object:self
+                                                      userInfo:nil];
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Caution", nil)
                                                     message:NSLocalizedString(@"Peripheral disconnect.", nil)
                                                    delegate:nil
                                           cancelButtonTitle:@"OK"
                                           otherButtonTitles:nil];
     [alert show];
-    
+
     [self stop];
     
 }

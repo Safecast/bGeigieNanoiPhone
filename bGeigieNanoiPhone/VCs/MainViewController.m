@@ -186,7 +186,6 @@
 
 -(void)disconnectedWithPeripheral:(NSNotification *) notification
 {
-    [ApplicationDelegate.bleCentralHandler stop];
     [_bleConnectionButton setTitle:@"Connect" forState:UIControlStateNormal];
     _isBLEConnected = FALSE;
 }
@@ -212,9 +211,26 @@
             NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
 
             if ([ud valueForKey:@"uploadToServer"] ) {
-                if ([[ud valueForKey:@"uploadToServer"] boolValue]) {
-                    [self postSensorData];
+                
+                NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+                NSString *apiKey = [ud valueForKey:@"apiKey"];
+                NSString *deviceID = [ud valueForKey:@"deviceID"];
+                if (!deviceID || !apiKey || [deviceID isEqualToString:@""] || [apiKey isEqualToString:@""]) {
+                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"Caution", nil)
+                                                                    message:NSLocalizedString(@"Device ID or API Key empty", nil)
+                                                                   delegate:nil
+                                                          cancelButtonTitle:@"OK"
+                                                          otherButtonTitles:nil];
+                    [alert show];
+                }else{
+                    _apiKey = apiKey;
+                    _deviceID = deviceID;
+                    if ([[ud valueForKey:@"uploadToServer"] boolValue]) {
+                        [self postSensorData];
+                    }
                 }
+
+
             }
         }
 
