@@ -51,10 +51,43 @@ $BNXSTS,0210,23,45,12,0.304
 
 - (NSDictionary*)parseDataByString:(NSString*)rawString
 {
-    if ([rawString hasPrefix:@"$BNRDD"]) {
-        return [self parseBNRDDString:rawString];
-    }else if([rawString hasPrefix:@"$BNXSTS"]){
-        return [self parseBNXSTSString:rawString];
+    NSArray *stringArray = [rawString componentsSeparatedByString:@"$BNXSTS"];
+    if (stringArray.count > 1) {
+        NSString *bnrddString =     [stringArray objectAtIndex:0];
+        NSString *bnxstsString =    [stringArray objectAtIndex:1];
+        NSDictionary *bnrddDict = [self parseBNRDDString:bnrddString];
+        NSDictionary *bnxstsDict = [self parseBNXSTSString:bnxstsString];
+        
+        NSArray *dataTypeArray1 =   [bnrddDict objectForKey:@"dataTypes"];
+        NSArray *dataValueArray1 =  [bnrddDict objectForKey:@"dataValues"];
+        NSArray *dataUnitArray1 =   [bnrddDict objectForKey:@"dataUnits"];
+
+        NSArray *dataTypeArray2 =   [bnxstsDict objectForKey:@"dataTypes"];
+        NSArray *dataValueArray2 =  [bnxstsDict objectForKey:@"dataValues"];
+        NSArray *dataUnitArray2 =   [bnxstsDict objectForKey:@"dataUnits"];
+        
+        NSMutableArray *dataTypeArray = [[NSMutableArray alloc] initWithArray:dataTypeArray1];
+        [dataTypeArray addObjectsFromArray:dataTypeArray2];
+
+        NSMutableArray *dataValueArray = [[NSMutableArray alloc] initWithArray:dataValueArray1];
+        [dataValueArray addObjectsFromArray:dataValueArray2];
+        
+        NSMutableArray *dataUnitArray = [[NSMutableArray alloc] initWithArray:dataUnitArray1];
+        [dataUnitArray addObjectsFromArray:dataUnitArray2];
+        
+        NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:bnrddDict];
+        [dict setObject:dataTypeArray forKey:@"dataTypes"];
+        [dict setObject:dataValueArray forKey:@"dataValues"];
+        [dict setObject:dataUnitArray forKey:@"dataUnits"];
+        
+        return dict;
+        
+    }else{
+        if ([rawString hasPrefix:@"$BNRDD"]) {
+            return [self parseBNRDDString:rawString];
+        }else if([rawString hasPrefix:@"$BNXSTS"]){
+            return [self parseBNXSTSString:rawString];
+        }
     }
     return nil;
 }

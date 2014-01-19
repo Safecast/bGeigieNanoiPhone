@@ -250,7 +250,6 @@
         _dataRecord = @"";
         
     }
-    NSLog(@"received data:%@",_dataRecord);
     if (stringFromData) {
         _dataRecord = [[NSString alloc] initWithString:[_dataRecord stringByAppendingString:stringFromData]];
     }

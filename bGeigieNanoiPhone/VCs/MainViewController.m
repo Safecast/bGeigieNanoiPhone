@@ -45,15 +45,20 @@
 {
     [super viewDidLoad];
     
-    //init
     _isBLEConnected = FALSE;
-    
+
     //regiester to be observer of BLE notifications
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(connectedToPeripheral:) name:BLE_PERIPHERIAL_CONNECTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(disconnectedWithPeripheral:) name:BLE_PERIPHERIAL_DISCONNECTED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(receivedSensorData:) name:BLE_CENTRAL_RECEIVED_DATA object:nil];
 
 
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    
     _dataTypes = @[@"Radiation"];
     _dataValues = @[@"0.000"];
     _dataUnits  = @[@"uSv/h"];
@@ -79,6 +84,7 @@
     pageControl.currentPageIndicatorTintColor = [UIColor blackColor];
     pageControl.backgroundColor = [UIColor whiteColor];
     
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -179,7 +185,8 @@
     NSString *sensorRawData = [notification.userInfo objectForKey:@"rawData"];
     SensorDataParser *parser = [[SensorDataParser alloc] init];
     NSDictionary *parsedResult = [parser parseDataByString:sensorRawData];
-
+    
+    NSLog(@"received result:%@",parsedResult);
     if (parsedResult) {
         NSArray *dataTypesArray = [parsedResult objectForKey:@"dataTypes"];
         NSArray *valueArray = [parsedResult objectForKey:@"dataValues"];
