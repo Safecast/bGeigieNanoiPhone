@@ -204,6 +204,9 @@
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="hdj-2S-tW2">
                                                     <rect key="frame" x="65" y="6" width="51" height="31"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <connections>
+                                                        <action selector="switchToUpload:" destination="w7w-df-cay" eventType="valueChanged" id="mVz-dc-SEc"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="stop" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xYP-qj-k8d">
                                                     <rect key="frame" x="127" y="11" width="34" height="21"/>
@@ -240,6 +243,7 @@
                     <connections>
                         <outlet property="apiKeyTextfield" destination="blX-Ar-AE6" id="Ldl-ZW-fKC"/>
                         <outlet property="deviceIDTextfield" destination="qRV-mP-XMj" id="hhu-Nr-3pn"/>
+                        <outlet property="uploadSwitch" destination="hdj-2S-tW2" id="TY4-KU-qI6"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GZj-WK-qv0" userLabel="First Responder" sceneMemberID="firstResponder"/>

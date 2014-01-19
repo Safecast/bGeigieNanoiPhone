@@ -12,6 +12,8 @@
 @property (weak, nonatomic) IBOutlet UITextField *apiKeyTextfield;
 @property (weak, nonatomic) IBOutlet UITextField *deviceIDTextfield;
 - (IBAction)pushRob:(id)sender;
+@property (weak, nonatomic) IBOutlet UISwitch *uploadSwitch;
+- (IBAction)switchToUpload:(id)sender;
 
 @end
 
@@ -42,6 +44,10 @@
     
     if ([ud valueForKey:@"apiKey"]) {
         _apiKeyTextfield.text = [ud valueForKey:@"apiKey"];
+    }
+    
+    if ([ud valueForKey:@"uploadToServer"]) {
+        _uploadSwitch.on = [[ud valueForKey:@"uploadToServer"] boolValue];
     }
 }
 
@@ -147,5 +153,10 @@
     _deviceIDTextfield.text = @"44";
     [self textFieldDidEndEditing:_apiKeyTextfield];
     [self textFieldDidEndEditing:_deviceIDTextfield];
+}
+- (IBAction)switchToUpload:(id)sender {
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:[NSNumber numberWithBool:_uploadSwitch.on] forKey:@"uploadToServer"];
+
 }
 @end

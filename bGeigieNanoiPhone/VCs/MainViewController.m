@@ -208,7 +208,14 @@
         if (sensorData) {
             [[NSNotificationCenter defaultCenter] postNotificationName:RADIATION_NEED_TO_UPDATA object:self userInfo:@{@"dataType": [_dataTypes objectAtIndex:0], @"dataValue":[_dataValues objectAtIndex:0], @"dataUnit":[_dataUnits objectAtIndex:0]}];
             [_sensorDataToUpload addObject:sensorData];
-            [self postSensorData];
+        
+            NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+
+            if ([ud valueForKey:@"uploadToServer"] ) {
+                if ([[ud valueForKey:@"uploadToServer"] boolValue]) {
+                    [self postSensorData];
+                }
+            }
         }
 
 
