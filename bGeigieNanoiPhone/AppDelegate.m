@@ -16,6 +16,9 @@
     // Override point for customization after application launch.
     [TestFlight takeOff:@"185bb5be-04e3-45e4-8696-add6a452adf3"];
 
+    //init BLE central handler
+    _bleCentralHandler = [[BLECentralHandler alloc] init];
+
     return YES;
 }
 							
