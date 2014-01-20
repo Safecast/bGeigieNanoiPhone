@@ -107,8 +107,8 @@ $BNXSTS,0210,23,45,12,0.304
     float radiationuSvhValue =  [radiationCPMString floatValue]/344.00;
     NSString *radiationuSvhString = [NSString stringWithFormat:@"%4.3f",radiationuSvhValue];
     
-    NSString *latitudeString        = [dataArray objectAtIndex:7];
-    NSString *longitudeString       = [dataArray objectAtIndex:9];
+    NSString *latitudeString        = [NSString stringWithFormat:@"%f",[self adjustToDecimalLatitude:[dataArray objectAtIndex:7]]];
+    NSString *longitudeString       = [NSString stringWithFormat:@"%f",[self adjustToDecimalLongitude:[dataArray objectAtIndex:9]]];
     NSDate *receivedDate =            [dataArray objectAtIndex:2];
     
     NSString *unit = @"uSv/h";
