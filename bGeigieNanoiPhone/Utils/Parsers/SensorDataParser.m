@@ -111,7 +111,7 @@ $BNXSTS,0210,23,45,12,0.304
     NSString *longitudeString       = [NSString stringWithFormat:@"%f",[self adjustToDecimalLongitude:[dataArray objectAtIndex:9]]];
     NSDate *receivedDate =            [dataArray objectAtIndex:2];
     
-    NSString *unit = @"uSv/h";
+    NSString *unit = @"μSv/h";
     NSString *dataType = @"Radiation";
     return @{@"dataTypes":@[dataType], @"dataValues":@[radiationuSvhString], @"dataUnits":@[unit], @"latitude":latitudeString, @"longitude":longitudeString, @"receivedDate":receivedDate};
     

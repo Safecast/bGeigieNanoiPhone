@@ -32,7 +32,7 @@
     // CO2量 Kilogram (kg)
     float       co2;
     
-    // 放射線量 microsievert per hour(mSv/h)
+    // 放射線量 microsievert per hour(μSv/h)
     float       radiation;
     
     // 気圧
