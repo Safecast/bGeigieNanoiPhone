@@ -147,13 +147,6 @@
     }
 }
 
-- (IBAction)pushRob:(id)sender {
-    
-    _apiKeyTextfield.text = @"q1LKu7RQ8s5pmyxunnDW";
-    _deviceIDTextfield.text = @"44";
-    [self textFieldDidEndEditing:_apiKeyTextfield];
-    [self textFieldDidEndEditing:_deviceIDTextfield];
-}
 - (IBAction)switchToUpload:(id)sender {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud setObject:[NSNumber numberWithBool:_uploadSwitch.on] forKey:@"uploadToServer"];
