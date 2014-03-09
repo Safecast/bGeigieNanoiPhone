@@ -113,7 +113,7 @@ $BNXSTS,0210,23,45,12,0.304
     
     NSString *unit = @"μSv/h";
     NSString *dataType = @"Radiation";
-    return @{@"dataTypes":@[dataType], @"dataValues":@[radiationuSvhString], @"dataUnits":@[unit], @"latitude":latitudeString, @"longitude":longitudeString, @"receivedDate":receivedDate};
+    return @{@"dataTypes":@[dataType,dataType], @"dataValues":@[radiationuSvhString, radiationCPMString], @"dataUnits":@[unit, @"CPM"], @"latitude":latitudeString, @"longitude":longitudeString, @"receivedDate":receivedDate};
     
 }
 -(NSDictionary *)parseBNXSTSString:(NSString *)rawString
