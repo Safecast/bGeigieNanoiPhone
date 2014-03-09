@@ -71,7 +71,7 @@
     
     _dataTypes = @[@"Radiation"];
     _dataValues = @[@"0.000"];
-    _dataUnits  = @[@"uSv/h"];
+    _dataUnits  = @[@"μSv/h"];
     
     //init page view controller
     // Create page view controller
