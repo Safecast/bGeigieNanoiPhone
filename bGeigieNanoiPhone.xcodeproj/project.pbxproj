@@ -347,6 +347,13 @@
 					BE3816DD187BC3C60005C7DE = {
 						TestTargetID = BE3816BC187BC3C60005C7DE;
 					};
+					BE9CC197187E365B00401717 = {
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
+					};
 				};
 			};
 			buildConfigurationList = BE3816B8187BC3C60005C7DE /* Build configuration list for PBXProject "bGeigieNanoiPhone" */;
