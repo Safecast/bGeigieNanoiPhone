@@ -207,6 +207,7 @@
         _dataUnits = unitArray;
         SensorData *sensorData = [parser sensorDataFromDict:parsedResult];
         
+        //only reload the pages once
         static BOOL reloadOnce = FALSE;
         if (!reloadOnce) {
             [self reloadPageViewController];

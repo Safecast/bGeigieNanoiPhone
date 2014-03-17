@@ -48,13 +48,36 @@
 
 -(void)updateData: (NSNotification *) notification
 {
-    _dataType = [notification.userInfo objectForKey:@"dataType"];
-    _dataValue = [notification.userInfo objectForKey:@"dataValue"];
-    _dataUnit = [notification.userInfo objectForKey:@"dataUnit"];
+    NSString *unitString = [self getStringFromUnicodeString:[notification.userInfo objectForKey:@"dataUnit"]];
     
-    _titleLabel.text = _dataType;
-    _valueLabel.text = _dataValue;
-    _unitLabel.text = _dataUnit;
+    if (![_dataType isEqualToString:@""]) {
+        if ([_dataType isEqualToString:[notification.userInfo objectForKey:@"dataType"]] &&
+             [_dataUnit isEqualToString:[notification.userInfo objectForKey:@"dataUnit"]]) {
+            _dataValue = [notification.userInfo objectForKey:@"dataValue"];
+            _valueLabel.text = _dataValue;
+
+        }
+    }else{
+        _dataType = [notification.userInfo objectForKey:@"dataType"];
+        _dataValue = [notification.userInfo objectForKey:@"dataValue"];
+        _dataUnit = [notification.userInfo objectForKey:@"dataUnit"];
+        
+        _titleLabel.text = _dataType;
+        _valueLabel.text = _dataValue;
+        _unitLabel.text = _dataUnit;
+    }
+    
+
+}
+
+-(NSString *)getStringFromUnicodeString: (NSString *)unicodeString
+{
+    NSData *unicodedStringData =
+    [unicodeString dataUsingEncoding:NSUTF8StringEncoding];
+    NSString *stringValue =
+    [[NSString alloc] initWithData:unicodedStringData encoding:NSNonLossyASCIIStringEncoding];
+    
+    return stringValue;
 }
 
 
