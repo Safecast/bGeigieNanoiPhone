@@ -134,9 +134,9 @@ $BNXSTS,0210,23,45,12,0.304
     NSString *coPPMString = [NSString stringWithFormat:@"%4.3f",coValue];
     NSString *noxPPMString = [NSString stringWithFormat:@"%4.3f",noxValue];
 
-    NSArray *dataTypesArray = @[@"Tempreature", @"Humility", @"CO", @"NOX"];
+    NSArray *dataTypesArray = @[@"Temperature", @"Humidity", @"CO", @"NOX"];
     NSArray *valueArray = @[temperatureValueString, humilityValueString, coPPMString, noxPPMString];
-    NSArray *unitArray = @[@"C", @"%",@"PPM", @"PPM"];
+    NSArray *unitArray = @[@"℃", @"%",@"PPM", @"PPM"];
     
     return @{@"dataTypes":dataTypesArray, @"dataValues":valueArray, @"dataUnits":unitArray};
 }
@@ -158,9 +158,9 @@ $BNXSTS,0210,23,45,12,0.304
         
         if ([dataType isEqualToString:@"Radiation"]) {
             sensorData.radiation = [dataValue floatValue];
-        }else if([dataType isEqualToString:@"Tempreature"]) {
+        }else if([dataType isEqualToString:@"Temperature"]) {
             sensorData.temperature = [dataValue floatValue];
-        }else if([dataType isEqualToString:@"Humility"]) {
+        }else if([dataType isEqualToString:@"Humidity"]) {
             sensorData.humidity = [dataValue floatValue];
         }else if([dataType isEqualToString:@"CO"]) {
             sensorData.CO = [dataValue floatValue];

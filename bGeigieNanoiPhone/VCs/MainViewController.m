@@ -137,6 +137,7 @@
         return nil;
     }
     
+    
     // Create a new view controller and pass suitable data.
     SingleMeterViewController *singleMeterViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"SingleMeterViewController"];
     
@@ -150,12 +151,13 @@
 
 - (NSInteger)presentationCountForPageViewController:(UIPageViewController *)pageViewController
 {
+    NSLog(@"number of data type:%d",_dataTypes.count);
     return [self.dataTypes count];
 }
 
 - (NSInteger)presentationIndexForPageViewController:(UIPageViewController *)pageViewController
 {
-    return 0;
+    return _currentIndex;
 }
 
 - (IBAction)pushBLEConnectionButton:(id)sender {
@@ -196,6 +198,7 @@
     NSDictionary *parsedResult = [parser parseDataByString:sensorRawData];
     NSLog(@"parserResult:%@",parsedResult);
     if (parsedResult) {
+        
         NSArray *dataTypesArray = [parsedResult objectForKey:@"dataTypes"];
         NSArray *valueArray = [parsedResult objectForKey:@"dataValues"];
         NSArray *unitArray  = [parsedResult objectForKey:@"dataUnits"];
@@ -204,8 +207,15 @@
         _dataUnits = unitArray;
         SensorData *sensorData = [parser sensorDataFromDict:parsedResult];
         
+        //only reload the pages once
+        static BOOL reloadOnce = FALSE;
+        if (!reloadOnce) {
+            [self reloadPageViewController];
+            reloadOnce = TRUE;
+        }
+        
         if (sensorData) {
-            [[NSNotificationCenter defaultCenter] postNotificationName:RADIATION_NEED_TO_UPDATA object:self userInfo:@{@"dataType": [_dataTypes objectAtIndex:0], @"dataValue":[_dataValues objectAtIndex:0], @"dataUnit":[_dataUnits objectAtIndex:0]}];
+            [[NSNotificationCenter defaultCenter] postNotificationName:DATA_NEED_TO_UPDATA object:self userInfo:@{@"dataTypes": _dataTypes, @"dataValues":_dataValues, @"dataUnits":_dataUnits}];
             [_sensorDataToUpload addObject:sensorData];
         
             NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -332,6 +342,13 @@
     
     
     return YES;
+}
+
+-(void)reloadPageViewController
+{
+    SingleMeterViewController *startingViewController = [self viewControllerAtIndex:0];
+    NSArray *viewControllers = @[startingViewController];
+    [self.pageViewController setViewControllers:viewControllers direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
 }
 
 @end

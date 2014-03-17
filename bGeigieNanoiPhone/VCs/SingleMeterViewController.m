@@ -30,7 +30,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:RADIATION_NEED_TO_UPDATA object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateData:) name:DATA_NEED_TO_UPDATA object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -48,15 +48,25 @@
 
 -(void)updateData: (NSNotification *) notification
 {
-    _dataType = [notification.userInfo objectForKey:@"dataType"];
-    _dataValue = [notification.userInfo objectForKey:@"dataValue"];
-    _dataUnit = [notification.userInfo objectForKey:@"dataUnit"];
     
-    _titleLabel.text = _dataType;
-    _valueLabel.text = _dataValue;
-    _unitLabel.text = _dataUnit;
+    if (![_dataType isEqualToString:@""]) {
+        NSArray *receivedDataTypes = [notification.userInfo objectForKey:@"dataTypes"];
+        NSArray *receivedDataUnits = [notification.userInfo objectForKey:@"dataUnits"];
+        NSArray *receivedDataValues = [notification.userInfo objectForKey:@"dataValues"];
+        
+        for (int i=0; i < receivedDataTypes.count; i++) {
+            NSString *receivedDataType = receivedDataTypes[i];
+            NSString *receivedDataUnit = receivedDataUnits[i];
+            if ([receivedDataType isEqualToString:_dataType] &&
+                [receivedDataUnit isEqualToString:_dataUnit]) {
+                _dataValue = receivedDataValues[i];
+                _valueLabel.text = _dataValue;
+            }
+        }
+    
+    }
+    
+
 }
-
-
 
 @end
