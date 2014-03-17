@@ -136,7 +136,7 @@ $BNXSTS,0210,23,45,12,0.304
 
     NSArray *dataTypesArray = @[@"Temperature", @"Humidity", @"CO", @"NOX"];
     NSArray *valueArray = @[temperatureValueString, humilityValueString, coPPMString, noxPPMString];
-    NSArray *unitArray = @[@"C", @"%",@"PPM", @"PPM"];
+    NSArray *unitArray = @[@"℃", @"%",@"PPM", @"PPM"];
     
     return @{@"dataTypes":dataTypesArray, @"dataValues":valueArray, @"dataUnits":unitArray};
 }
