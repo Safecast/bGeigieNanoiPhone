@@ -82,7 +82,7 @@
 //for pass the sensor data by notification
 - (NSDictionary*)getDictionary; 
 - (void)setObjectWithDictionary:(NSDictionary*)dictionary;
-- (float)getCPMRadiation;
+- (int)getCPMRadiation;
 
 //- (BOOL)isCorrectData;
 - (BOOL)isCorrectSensorData;

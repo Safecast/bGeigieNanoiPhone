@@ -48,7 +48,7 @@
     pressure = _pressure / 10 + 800;
 }
 
-- (float)getCPMRadiation{
+- (int)getCPMRadiation{
     return radiation * 344;
 }
 
