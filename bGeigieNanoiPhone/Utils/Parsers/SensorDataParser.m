@@ -151,12 +151,14 @@ $BNXSTS,0210,23,45,12,0.304
     
     NSArray *dataTypeArray =   [dict objectForKey:@"dataTypes"];
     NSArray *dataValueArray =  [dict objectForKey:@"dataValues"];
+    NSArray *dateUnitsArray =   [dict objectForKey:@"dataUnits"];
     
     for (int i= 0; i < dataTypeArray.count; i++) {
         NSString *dataType = [dataTypeArray objectAtIndex:i];
         NSString *dataValue = [dataValueArray objectAtIndex:i];
+        NSString *dateUnit = dateUnitsArray[i];
         
-        if ([dataType isEqualToString:@"Radiation"]) {
+        if ([dataType isEqualToString:@"Radiation"]&&[dateUnit isEqualToString:@"μSv/h"]) {
             sensorData.radiation = [dataValue floatValue];
         }else if([dataType isEqualToString:@"Temperature"]) {
             sensorData.temperature = [dataValue floatValue];
