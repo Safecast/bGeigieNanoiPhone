@@ -306,7 +306,7 @@
         
         
         
-        NSMutableURLRequest *request = [serializer requestWithMethod:@"POST" URLString: [NSString stringWithFormat:@"http://176.56.236.75/safecast/index.php?api_key=%@",_apiKey]  parameters:parameters];
+        NSMutableURLRequest *request = [serializer requestWithMethod:@"POST" URLString: [NSString stringWithFormat:@"http://107.161.164.166/scripts/index.php?api_key=%@",_apiKey]  parameters:parameters];
         //Add your request object to an AFHTTPRequestOperation
         AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
         [operation setCompletionBlockWithSuccess:
