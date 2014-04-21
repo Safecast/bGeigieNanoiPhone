@@ -28,8 +28,6 @@
 		BE5EEC59188B6D97008DF771 /* SettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC4F188B6D97008DF771 /* SettingsViewController.m */; };
 		BE5EEC5A188B6D97008DF771 /* SingleMeterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC51188B6D97008DF771 /* SingleMeterViewController.m */; };
 		BE5EEC5B188B6D97008DF771 /* SingleMeterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC51188B6D97008DF771 /* SingleMeterViewController.m */; };
-		BE5EEC5C188B6D97008DF771 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC53188B6D97008DF771 /* ViewController.m */; };
-		BE5EEC5D188B6D97008DF771 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC53188B6D97008DF771 /* ViewController.m */; };
 		BE5EEC60188B7D52008DF771 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC5F188B7D52008DF771 /* MainViewController.m */; };
 		BE5EEC61188B7D52008DF771 /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BE5EEC5F188B7D52008DF771 /* MainViewController.m */; };
 		BE9CC19A187E365B00401717 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BE3816D0187BC3C60005C7DE /* AppDelegate.m */; };
@@ -89,8 +87,6 @@
 		BE5EEC4F188B6D97008DF771 /* SettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingsViewController.m; sourceTree = "<group>"; };
 		BE5EEC50188B6D97008DF771 /* SingleMeterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SingleMeterViewController.h; sourceTree = "<group>"; };
 		BE5EEC51188B6D97008DF771 /* SingleMeterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SingleMeterViewController.m; sourceTree = "<group>"; };
-		BE5EEC52188B6D97008DF771 /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		BE5EEC53188B6D97008DF771 /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		BE5EEC5E188B7D52008DF771 /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainViewController.h; sourceTree = "<group>"; };
 		BE5EEC5F188B7D52008DF771 /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainViewController.m; sourceTree = "<group>"; };
 		BE9CC1A9187E365B00401717 /* bGeigieNanoiPhoneEnterprise.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = bGeigieNanoiPhoneEnterprise.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -232,8 +228,6 @@
 				BE5EEC4F188B6D97008DF771 /* SettingsViewController.m */,
 				BE5EEC50188B6D97008DF771 /* SingleMeterViewController.h */,
 				BE5EEC51188B6D97008DF771 /* SingleMeterViewController.m */,
-				BE5EEC52188B6D97008DF771 /* ViewController.h */,
-				BE5EEC53188B6D97008DF771 /* ViewController.m */,
 				BE5EEC5E188B7D52008DF771 /* MainViewController.h */,
 				BE5EEC5F188B7D52008DF771 /* MainViewController.m */,
 			);
@@ -464,7 +458,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE5EEC5C188B6D97008DF771 /* ViewController.m in Sources */,
 				BEDD7802187FE5D20089B779 /* SensorData.m in Sources */,
 				BEDD77F6187FE5700089B779 /* SensorDataParser.m in Sources */,
 				BE5EEC54188B6D97008DF771 /* FindingPeripheralTableViewController.m in Sources */,
@@ -491,7 +484,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BE5EEC5D188B6D97008DF771 /* ViewController.m in Sources */,
 				BEDD7803187FE5D20089B779 /* SensorData.m in Sources */,
 				BEDD77F7187FE5700089B779 /* SensorDataParser.m in Sources */,
 				BE5EEC55188B6D97008DF771 /* FindingPeripheralTableViewController.m in Sources */,
